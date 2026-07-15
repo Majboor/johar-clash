@@ -376,6 +376,29 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
 #jcload .bar i{display:block;height:100%;width:0;background:var(--red);transition:width .25s ease}
 #jcload .pct{font:500 11px/1 'DM Mono',monospace;color:var(--ink)}
 #jcload .sub{font:500 9px/1 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:.55;margin-top:8px}
+.prize-media{display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:stretch}
+.prize-media img{height:100%;object-fit:cover}
+/* mobile tuning for gaming additions */
+@media(max-width:850px){
+  .jc-sec{padding:10vh 20px}
+  .jc-head{flex-direction:column;align-items:flex-start;gap:10px;margin-bottom:6vh}
+  .jc-head h2{font-size:clamp(40px,13vw,86px);line-height:.82}
+  .prize-grid{gap:26px}
+  .prize-media{grid-template-columns:1fr}
+  .prize-media img{height:auto;aspect-ratio:16/9}
+  .prize-rows .r b{font-size:clamp(30px,10vw,50px)}
+  .reg-grid{gap:34px}
+  .reg-left h2{font-size:clamp(42px,14vw,80px)}
+  .venue-info{padding:28px 22px}
+  .venue-map iframe{min-height:320px}
+}
+@media(max-width:600px){
+  .jc-sec{padding:8vh 16px}
+  .jc-head h2{font-size:clamp(36px,13vw,64px)}
+  .games-art{grid-template-columns:1fr 1fr;gap:10px}
+  .prize-rows .r{padding:16px 2px}
+  .dl-grid{grid-template-columns:1fr}
+}
 </style>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
@@ -565,9 +588,9 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
 <section class="jc-sec" id="prize">
   <div class="jc-head"><div><span class="jc-kick">The loot / Split across the podium</span><h2>PKR 25,000 <span>POOL.</span></h2></div><span class="jc-kick">Paid on-site · 09 Aug 2026</span></div>
   <div class="prize-grid">
-    <div style="display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:stretch">
-    <img class="prize-banner" src="assets/hero-banner.jpg" alt="PKR 25,000 prize pool" style="height:100%;object-fit:cover">
-    <img class="prize-banner" src="assets/gg-trophy.png" alt="Championship trophy" style="height:100%;object-fit:cover;background:#0b0c10">
+    <div class="prize-media">
+    <img class="prize-banner" src="assets/hero-banner.jpg" alt="PKR 25,000 prize pool">
+    <img class="prize-banner" src="assets/gg-trophy.png" alt="Championship trophy" style="background:#0b0c10">
     </div>
     <div class="prize-rows">
       <div class="r win"><span>Champion</span><b>12,000</b></div>
