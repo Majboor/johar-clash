@@ -1,0 +1,456 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JOHAR CLASH — Lahore Gaming Tournament · PKR 25,000 Prize Pool</title>
+<meta name="description" content="JOHAR CLASH — a LAN gaming tournament in Johar Town, Lahore. FIFA, Tekken 5, Valorant, Call of Duty & more. PKR 25,000 prize pool. Register your squad now.">
+<meta property="og:title" content="JOHAR CLASH — Lahore Gaming Tournament">
+<meta property="og:description" content="FIFA · Tekken 5 · Valorant · CoD & more. PKR 25,000 prize pool. Johar Town, Lahore.">
+<meta property="og:type" content="website">
+<meta property="og:image" content="assets/hero-banner.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;900&family=Rajdhani:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/iconify-icon@2.1.0/dist/iconify-icon.min.js"></script>
+<style>
+:root{
+  --bg:#07080d; --bg2:#0c0e17; --panel:#11141f; --panel2:#161a29;
+  --line:#232a3d; --line2:#2f3750;
+  --ink:#eef1fb; --mut:#9aa3bd; --dim:#69708a;
+  --cyan:#22d3ee; --violet:#a855f7; --magenta:#f0399a; --lime:#b6f24a; --gold:#f5c451;
+  --dsp:"Orbitron",sans-serif; --hd:"Rajdhani",sans-serif; --mono:"Space Mono",monospace;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--hd);font-size:17px;line-height:1.55;
+  overflow-x:hidden;
+  background-image:
+    radial-gradient(900px 500px at 82% -8%, rgba(168,85,247,.18), transparent 60%),
+    radial-gradient(760px 460px at 6% 4%, rgba(34,211,238,.14), transparent 58%);
+  background-attachment:fixed}
+a{color:inherit;text-decoration:none}
+.wrap{max-width:1180px;margin:0 auto;padding:0 22px}
+.mono{font-family:var(--mono)}
+.tag{font-family:var(--mono);font-size:.66rem;letter-spacing:.28em;text-transform:uppercase;color:var(--cyan)}
+.grid-lines{position:fixed;inset:0;z-index:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(var(--line) 1px,transparent 1px),linear-gradient(90deg,var(--line) 1px,transparent 1px);
+  background-size:64px 64px;mask-image:radial-gradient(circle at 50% 30%,black,transparent 78%);
+  -webkit-mask-image:radial-gradient(circle at 50% 30%,black,transparent 78%);opacity:.15}
+section{position:relative;z-index:1}
+
+/* nav */
+nav{position:sticky;top:0;z-index:100;background:rgba(7,8,13,.82);backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--line)}
+nav .wrap{display:flex;align-items:center;gap:1.4rem;height:64px}
+.brand{font-family:var(--dsp);font-weight:900;font-size:1.15rem;letter-spacing:.06em;display:flex;align-items:center;gap:.5rem}
+.brand b{color:var(--cyan)}
+.brand .slash{color:var(--violet)}
+.nlinks{margin-left:auto;display:flex;gap:1.5rem}
+.nlinks a{font-family:var(--mono);font-size:.72rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);transition:.15s}
+.nlinks a:hover{color:var(--cyan)}
+.nbtn{font-family:var(--mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.55rem 1rem;border:1px solid var(--cyan);color:var(--cyan);transition:.15s;clip-path:polygon(8px 0,100% 0,100% calc(100% - 8px),calc(100% - 8px) 100%,0 100%,0 8px)}
+.nbtn:hover{background:var(--cyan);color:#04121a}
+@media(max-width:820px){.nlinks{display:none}}
+
+/* hero */
+.hero{position:relative;padding:clamp(3rem,7vw,6rem) 0 clamp(2.4rem,5vw,4rem);overflow:hidden}
+.hero-media{position:absolute;inset:0;z-index:0}
+.hero-media img{width:100%;height:100%;object-fit:cover;opacity:.42;filter:saturate(1.15) contrast(1.05)}
+.hero-media::after{content:"";position:absolute;inset:0;
+  background:linear-gradient(180deg,rgba(7,8,13,.55),rgba(7,8,13,.9) 78%,var(--bg))}
+.hero .wrap{position:relative;z-index:2}
+.hero-badges{display:flex;gap:.6rem;flex-wrap:wrap;align-items:center;margin-bottom:1.3rem}
+.chip{font-family:var(--mono);font-size:.66rem;letter-spacing:.16em;text-transform:uppercase;
+  padding:.4rem .7rem;border:1px solid var(--line2);color:var(--mut);background:rgba(17,20,31,.6)}
+.chip.live{color:var(--magenta);border-color:rgba(240,57,154,.5)}
+.chip.live::before{content:"";display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--magenta);margin-right:.5rem;box-shadow:0 0 8px var(--magenta);animation:pulse 1.4s infinite}
+@keyframes pulse{50%{opacity:.35}}
+h1.hero-title{font-family:var(--dsp);font-weight:900;font-size:clamp(2.6rem,8vw,6rem);line-height:.98;letter-spacing:-.01em;
+  text-transform:uppercase;margin:.2rem 0 .3rem}
+h1.hero-title .g{background:linear-gradient(92deg,var(--cyan),var(--violet) 60%,var(--magenta));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-sub{max-width:56ch;color:var(--mut);font-size:1.12rem;margin:.6rem 0 0}
+.hero-meta{display:flex;gap:2rem;flex-wrap:wrap;margin-top:1.7rem}
+.hero-meta .m .k{font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.hero-meta .m .v{font-family:var(--dsp);font-weight:700;font-size:1.15rem;margin-top:.15rem}
+.hero-cta{display:flex;gap:.8rem;flex-wrap:wrap;margin-top:2rem}
+.btn{font-family:var(--mono);font-size:.76rem;letter-spacing:.14em;text-transform:uppercase;
+  padding:.9rem 1.5rem;display:inline-flex;align-items:center;gap:.5rem;transition:.15s;cursor:pointer;border:1px solid transparent}
+.btn.primary{background:var(--cyan);color:#04121a;box-shadow:0 0 0 rgba(34,211,238,.5)}
+.btn.primary:hover{box-shadow:0 8px 30px rgba(34,211,238,.35);transform:translateY(-1px)}
+.btn.ghost{border-color:var(--line2);color:var(--ink)}
+.btn.ghost:hover{border-color:var(--violet);color:var(--violet)}
+
+/* prize flash card in hero */
+.prize-flash{margin-top:2.4rem;display:inline-flex;align-items:center;gap:1.1rem;
+  border:1px solid rgba(245,196,81,.4);background:linear-gradient(100deg,rgba(245,196,81,.12),rgba(168,85,247,.08));
+  padding:1rem 1.4rem;clip-path:polygon(14px 0,100% 0,100% calc(100% - 14px),calc(100% - 14px) 100%,0 100%,0 14px)}
+.prize-flash .amt{font-family:var(--dsp);font-weight:900;font-size:2rem;color:var(--gold);text-shadow:0 0 24px rgba(245,196,81,.5)}
+.prize-flash .lbl{font-family:var(--mono);font-size:.64rem;letter-spacing:.2em;text-transform:uppercase;color:var(--mut)}
+
+/* marquee */
+.marquee{border-top:1px solid var(--line);border-bottom:1px solid var(--line);background:var(--bg2);overflow:hidden;padding:.7rem 0}
+.marquee .track{display:flex;gap:3rem;white-space:nowrap;animation:scroll 26s linear infinite;font-family:var(--dsp);font-weight:700;font-size:1rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+.marquee .track span{display:inline-flex;align-items:center;gap:1rem}
+.marquee .track b{color:var(--cyan)}
+@keyframes scroll{to{transform:translateX(-50%)}}
+
+/* section head */
+.shead{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:2rem;flex-wrap:wrap}
+.shead h2{font-family:var(--dsp);font-weight:800;font-size:clamp(1.6rem,4vw,2.6rem);text-transform:uppercase;letter-spacing:.01em}
+.shead h2 span{color:var(--violet)}
+.sec{padding:clamp(3.2rem,7vw,5.5rem) 0;border-top:1px solid var(--line)}
+
+/* games */
+.games{display:grid;grid-template-columns:repeat(2,1fr);gap:1.1rem}
+@media(max-width:820px){.games{grid-template-columns:1fr}}
+.gcard{position:relative;border:1px solid var(--line);background:var(--panel);overflow:hidden;min-height:300px;display:flex;flex-direction:column;justify-content:flex-end;transition:.2s}
+.gcard:hover{border-color:var(--cyan);transform:translateY(-3px)}
+.gcard .art{position:absolute;inset:0;z-index:0}
+.gcard .art img{width:100%;height:100%;object-fit:cover;opacity:.6;transition:.3s}
+.gcard:hover .art img{opacity:.8;transform:scale(1.04)}
+.gcard .art::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 30%,rgba(7,8,13,.92))}
+.gcard .body{position:relative;z-index:1;padding:1.4rem}
+.gcard .feat{position:absolute;top:1rem;left:1rem;z-index:2;font-family:var(--mono);font-size:.6rem;letter-spacing:.18em;text-transform:uppercase;color:#04121a;background:var(--cyan);padding:.28rem .55rem}
+.gcard h3{font-family:var(--dsp);font-weight:800;font-size:1.7rem;text-transform:uppercase;letter-spacing:.02em}
+.gcard .meta{display:flex;gap:.5rem;flex-wrap:wrap;margin-top:.7rem}
+.gcard .meta span{font-family:var(--mono);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);border:1px solid var(--line2);padding:.22rem .5rem}
+.gsmall{display:grid;grid-template-columns:repeat(4,1fr);gap:.9rem;margin-top:1.1rem}
+@media(max-width:820px){.gsmall{grid-template-columns:repeat(2,1fr)}}
+.gmini{border:1px solid var(--line);background:var(--panel);padding:1.1rem;transition:.15s}
+.gmini:hover{border-color:var(--violet)}
+.gmini iconify-icon{font-size:1.6rem;color:var(--violet)}
+.gmini h4{font-family:var(--dsp);font-weight:700;font-size:1.02rem;text-transform:uppercase;margin:.6rem 0 .2rem}
+.gmini p{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* prize breakdown */
+.prizes{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:820px){.prizes{grid-template-columns:repeat(2,1fr)}}
+.pcard{border:1px solid var(--line);background:var(--panel);padding:1.6rem 1.3rem;position:relative;overflow:hidden}
+.pcard.first{border-color:rgba(245,196,81,.5);background:linear-gradient(160deg,rgba(245,196,81,.1),var(--panel))}
+.pcard .rank{font-family:var(--mono);font-size:.62rem;letter-spacing:.18em;text-transform:uppercase;color:var(--dim)}
+.pcard .amt{font-family:var(--dsp);font-weight:900;font-size:2.1rem;margin:.4rem 0 .1rem}
+.pcard.first .amt{color:var(--gold)}
+.pcard .cur{font-family:var(--mono);font-size:.66rem;color:var(--mut)}
+.pcard iconify-icon{position:absolute;right:.9rem;top:.9rem;font-size:1.3rem;color:var(--line2)}
+.pcard.first iconify-icon{color:var(--gold)}
+
+/* format steps */
+.steps{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem}
+@media(max-width:820px){.steps{grid-template-columns:1fr 1fr}}
+.step{border:1px solid var(--line);background:var(--panel);padding:1.4rem}
+.step .n{font-family:var(--dsp);font-weight:900;font-size:1.8rem;color:var(--cyan);opacity:.5}
+.step h4{font-family:var(--dsp);font-weight:700;font-size:1.05rem;text-transform:uppercase;margin:.5rem 0 .3rem}
+.step p{font-size:.92rem;color:var(--mut)}
+
+/* venue */
+.venue{display:grid;grid-template-columns:1.05fr .95fr;gap:1.6rem;align-items:stretch}
+@media(max-width:900px){.venue{grid-template-columns:1fr}}
+.venue .card{border:1px solid var(--line);background:var(--panel);overflow:hidden}
+.venue .vimg{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;border-bottom:1px solid var(--line)}
+.venue .vbody{padding:1.5rem}
+.venue h3{font-family:var(--dsp);font-weight:800;font-size:1.4rem;text-transform:uppercase}
+.addr{font-family:var(--mono);font-size:.82rem;color:var(--mut);line-height:1.9;margin:.9rem 0 1.1rem}
+.addr b{color:var(--ink)}
+.mapbox{width:100%;height:100%;min-height:340px;border:0;filter:grayscale(.3) invert(.92) hue-rotate(180deg) contrast(.95)}
+.mapwrap{border:1px solid var(--line);overflow:hidden;background:var(--panel)}
+
+/* downloads */
+.dl{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem}
+@media(max-width:820px){.dl{grid-template-columns:1fr}}
+.dcard{border:1px solid var(--line);background:var(--panel);padding:1.3rem;display:flex;gap:1rem;align-items:center;transition:.15s}
+.dcard:hover{border-color:var(--cyan)}
+.dcard iconify-icon{font-size:1.9rem;color:var(--cyan)}
+.dcard .t{font-family:var(--dsp);font-weight:700;font-size:1rem;text-transform:uppercase}
+.dcard .s{font-family:var(--mono);font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--dim)}
+
+/* register form */
+.reg{display:grid;grid-template-columns:.85fr 1.15fr;gap:2rem;align-items:start}
+@media(max-width:900px){.reg{grid-template-columns:1fr}}
+.reg .left h2{font-family:var(--dsp);font-weight:900;font-size:clamp(1.8rem,4vw,2.8rem);text-transform:uppercase;line-height:1}
+.reg .left p{color:var(--mut);margin-top:1rem}
+.reg .left .hl{margin-top:1.6rem;display:flex;flex-direction:column;gap:.8rem}
+.reg .left .hl div{display:flex;align-items:center;gap:.7rem;font-family:var(--mono);font-size:.78rem;color:var(--mut)}
+.reg .left .hl iconify-icon{color:var(--cyan);font-size:1.1rem}
+form.card{border:1px solid var(--line);background:var(--panel);padding:1.7rem}
+.frow{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:560px){.frow{grid-template-columns:1fr}}
+.field{margin-bottom:1.05rem}
+.field label{display:block;font-family:var(--mono);font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;color:var(--mut);margin-bottom:.4rem}
+.field input,.field select,.field textarea{width:100%;background:var(--bg2);border:1px solid var(--line2);color:var(--ink);
+  font-family:var(--hd);font-size:1rem;padding:.75rem .8rem;outline:none;transition:.15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--cyan);box-shadow:0 0 0 3px rgba(34,211,238,.12)}
+.field select{appearance:none;cursor:pointer}
+.chks{display:flex;flex-wrap:wrap;gap:.5rem}
+.chk{font-family:var(--mono);font-size:.66rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mut);
+  border:1px solid var(--line2);padding:.5rem .7rem;cursor:pointer;user-select:none;transition:.12s}
+.chk input{display:none}
+.chk.on{background:rgba(34,211,238,.14);border-color:var(--cyan);color:var(--cyan)}
+.submit{width:100%;justify-content:center;margin-top:.4rem}
+.formnote{font-family:var(--mono);font-size:.62rem;color:var(--dim);margin-top:.9rem;letter-spacing:.04em}
+.okmsg{display:none;border:1px solid var(--cyan);background:rgba(34,211,238,.1);padding:1.2rem;margin-top:1rem;
+  font-family:var(--mono);font-size:.82rem;color:var(--cyan)}
+.okmsg.show{display:block}
+
+footer{border-top:1px solid var(--line);padding:2.6rem 0;background:var(--bg2)}
+footer .wrap{display:flex;justify-content:space-between;gap:1rem;flex-wrap:wrap;align-items:center}
+footer .mono{font-size:.66rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim)}
+</style>
+</head>
+<body>
+<div class="grid-lines"></div>
+
+<nav><div class="wrap">
+  <span class="brand">JOHAR<span class="slash">/</span><b>CLASH</b></span>
+  <div class="nlinks">
+    <a href="#games">Games</a>
+    <a href="#prize">Prize Pool</a>
+    <a href="#format">Format</a>
+    <a href="#venue">Venue</a>
+    <a href="#downloads">Downloads</a>
+  </div>
+  <a href="#register" class="nbtn" data-track="nav_register">Register →</a>
+</div></nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="hero-media"><img src="assets/hero-banner.jpg" alt="" onerror="this.style.display='none'"></div>
+  <div class="wrap">
+    <div class="hero-badges">
+      <span class="chip live">Registration Open</span>
+      <span class="chip">Johar Town · Lahore</span>
+      <span class="chip">LAN · On-site</span>
+    </div>
+    <p class="tag">Lahore Gaming Tournament · 2026</p>
+    <h1 class="hero-title">Johar <span class="g">Clash</span></h1>
+    <p class="hero-sub">One venue. Six titles. One champion. Bring your squad to Johar Town and battle it out on <b>FIFA</b>, <b>Tekken 5</b> and more — for a <b>PKR 25,000</b> prize pool and city bragging rights.</p>
+    <div class="hero-meta">
+      <div class="m"><div class="k">Date</div><div class="v">Sat · 09 Aug 2026</div></div>
+      <div class="m"><div class="k">Kickoff</div><div class="v">12:00 PM</div></div>
+      <div class="m"><div class="k">Format</div><div class="v">On-site LAN</div></div>
+      <div class="m"><div class="k">Entry</div><div class="v">Per squad</div></div>
+    </div>
+    <div class="hero-cta">
+      <a href="#register" class="btn primary" data-track="hero_register"><iconify-icon icon="mdi:sword-cross"></iconify-icon> Register your squad</a>
+      <a href="#games" class="btn ghost">View the roster</a>
+    </div>
+    <div class="prize-flash">
+      <iconify-icon icon="mdi:trophy" style="font-size:2rem;color:var(--gold)"></iconify-icon>
+      <div><div class="amt">PKR 25,000</div><div class="lbl">Total Prize Pool</div></div>
+    </div>
+  </div>
+</header>
+
+<!-- MARQUEE -->
+<div class="marquee"><div class="track">
+  <span>FIFA <b>●</b> TEKKEN 5 <b>●</b> VALORANT <b>●</b> CALL OF DUTY <b>●</b> MORTAL KOMBAT <b>●</b> PUBG MOBILE <b>●</b></span>
+  <span>FIFA <b>●</b> TEKKEN 5 <b>●</b> VALORANT <b>●</b> CALL OF DUTY <b>●</b> MORTAL KOMBAT <b>●</b> PUBG MOBILE <b>●</b></span>
+</div></div>
+
+<!-- GAMES -->
+<section class="sec" id="games"><div class="wrap">
+  <div class="shead">
+    <div><p class="tag">The Roster</p><h2>Games on the <span>floor</span></h2></div>
+    <p class="mono" style="font-size:.72rem;color:var(--dim);letter-spacing:.1em">6 TITLES · 2 HEADLINERS</p>
+  </div>
+  <div class="games">
+    <div class="gcard">
+      <span class="feat">Headliner</span>
+      <div class="art"><img src="assets/mode-fifa.jpg" alt="" onerror="this.style.display='none'"></div>
+      <div class="body">
+        <h3>FIFA</h3>
+        <div class="meta"><span>1v1</span><span>Console</span><span>Knockout</span></div>
+      </div>
+    </div>
+    <div class="gcard">
+      <span class="feat">Headliner</span>
+      <div class="art"><img src="assets/mode-tekken.jpg" alt="" onerror="this.style.display='none'"></div>
+      <div class="body">
+        <h3>Tekken 5</h3>
+        <div class="meta"><span>1v1</span><span>Arcade</span><span>Best of 3</span></div>
+      </div>
+    </div>
+  </div>
+  <div class="gsmall">
+    <div class="gmini"><iconify-icon icon="mdi:pistol"></iconify-icon><h4>Valorant</h4><p>5v5 · PC</p></div>
+    <div class="gmini"><iconify-icon icon="mdi:target-account"></iconify-icon><h4>Call of Duty</h4><p>Squads · PC</p></div>
+    <div class="gmini"><iconify-icon icon="mdi:karate"></iconify-icon><h4>Mortal Kombat</h4><p>1v1 · Console</p></div>
+    <div class="gmini"><iconify-icon icon="mdi:cellphone"></iconify-icon><h4>PUBG Mobile</h4><p>Squads · Mobile</p></div>
+  </div>
+</div></section>
+
+<!-- PRIZE -->
+<section class="sec" id="prize"><div class="wrap">
+  <div class="shead">
+    <div><p class="tag">The Loot</p><h2>PKR 25,000 <span>prize pool</span></h2></div>
+    <p class="mono" style="font-size:.72rem;color:var(--dim);letter-spacing:.1em">SPLIT ACROSS THE PODIUM</p>
+  </div>
+  <div class="prizes">
+    <div class="pcard first"><iconify-icon icon="mdi:crown"></iconify-icon><div class="rank">Champion</div><div class="amt">12,000</div><div class="cur">PKR</div></div>
+    <div class="pcard"><iconify-icon icon="mdi:medal"></iconify-icon><div class="rank">Runner-up</div><div class="amt">7,000</div><div class="cur">PKR</div></div>
+    <div class="pcard"><iconify-icon icon="mdi:medal-outline"></iconify-icon><div class="rank">3rd Place</div><div class="amt">3,000</div><div class="cur">PKR</div></div>
+    <div class="pcard"><iconify-icon icon="mdi:star-four-points"></iconify-icon><div class="rank">MVP + Spot Prizes</div><div class="amt">3,000</div><div class="cur">PKR</div></div>
+  </div>
+</div></section>
+
+<!-- FORMAT -->
+<section class="sec" id="format"><div class="wrap">
+  <div class="shead"><div><p class="tag">How it runs</p><h2>Tournament <span>format</span></h2></div></div>
+  <div class="steps">
+    <div class="step"><div class="n">01</div><h4>Register</h4><p>Lock your slot online. Pick your games and drop your squad details before the deadline.</p></div>
+    <div class="step"><div class="n">02</div><h4>Check-in</h4><p>Arrive at the Johar Town venue, verify your roster and collect your player pass on the day.</p></div>
+    <div class="step"><div class="n">03</div><h4>Brackets</h4><p>Single-elimination brackets per title. Headliners run best-of-3; finals are best-of-5.</p></div>
+    <div class="step"><div class="n">04</div><h4>Finals</h4><p>Grand finals on the main stage. Champions crowned and the PKR 25,000 pool paid out on-site.</p></div>
+  </div>
+</div></section>
+
+<!-- VENUE -->
+<section class="sec" id="venue"><div class="wrap">
+  <div class="shead"><div><p class="tag">Where</p><h2>The <span>venue</span></h2></div></div>
+  <div class="venue">
+    <div class="card">
+      <img class="vimg" src="assets/venue-arena.jpg" alt="Gaming venue" onerror="this.style.opacity=.001">
+      <div class="vbody">
+        <h3>Johar Town Gaming Floor</h3>
+        <p class="addr">
+          <b>Plot No. 16, Block F1 M.A</b><br>
+          Block F1, Phase 1, Johar Town<br>
+          Lahore, Pakistan
+        </p>
+        <a class="btn ghost" target="_blank" rel="noopener"
+           href="https://www.google.com/maps/dir/?api=1&destination=Plot+16+Block+F1+MA+Johar+Town+Lahore"
+           data-track="get_directions"><iconify-icon icon="mdi:directions"></iconify-icon> Get directions</a>
+      </div>
+    </div>
+    <div class="mapwrap">
+      <iframe class="mapbox" title="Venue map — Plot 16, Block F1, Johar Town"
+        src="https://www.google.com/maps?q=Plot%2016%20Block%20F1%20MA%20Johar%20Town%20Lahore&z=16&output=embed"
+        loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+    </div>
+  </div>
+</div></section>
+
+<!-- DOWNLOADS -->
+<section class="sec" id="downloads"><div class="wrap">
+  <div class="shead"><div><p class="tag">Media</p><h2>Venue &amp; event <span>downloads</span></h2></div></div>
+  <div class="dl">
+    <a class="dcard" href="downloads/venue-arena.jpg" download><iconify-icon icon="mdi:image"></iconify-icon><div><div class="t">Venue Shot</div><div class="s">JPG · gaming floor</div></div></a>
+    <a class="dcard" href="downloads/johar-clash-poster.jpg" download><iconify-icon icon="mdi:file-image"></iconify-icon><div><div class="t">Event Poster</div><div class="s">JPG · 25K prize</div></div></a>
+    <a class="dcard" href="downloads/johar-clash-rules.txt" download><iconify-icon icon="mdi:file-document"></iconify-icon><div><div class="t">Rulebook</div><div class="s">TXT · formats &amp; rules</div></div></a>
+  </div>
+</div></section>
+
+<!-- REGISTER -->
+<section class="sec" id="register"><div class="wrap">
+  <div class="reg">
+    <div class="left">
+      <p class="tag">Lock your slot</p>
+      <h2>Register your squad</h2>
+      <p>Slots are limited and go by title. Fill this in and we'll confirm your check-in details over email &amp; phone.</p>
+      <div class="hl">
+        <div><iconify-icon icon="mdi:calendar"></iconify-icon> Sat · 09 August 2026 · from 12 PM</div>
+        <div><iconify-icon icon="mdi:map-marker"></iconify-icon> Plot 16, Block F1, Johar Town, Lahore</div>
+        <div><iconify-icon icon="mdi:trophy"></iconify-icon> PKR 25,000 total prize pool</div>
+        <div><iconify-icon icon="mdi:controller"></iconify-icon> FIFA · Tekken 5 · Valorant · CoD · MK · PUBG</div>
+      </div>
+    </div>
+    <form class="card" id="regForm" autocomplete="on">
+      <div class="frow">
+        <div class="field"><label>Player / Captain name</label><input name="name" required placeholder="Your name"></div>
+        <div class="field"><label>Team / Gamer tag</label><input name="team" placeholder="Squad or tag"></div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Email</label><input type="email" name="email" required placeholder="you@email.com"></div>
+        <div class="field"><label>Phone / WhatsApp</label><input name="phone" required placeholder="+92 3xx xxxxxxx"></div>
+      </div>
+      <div class="field">
+        <label>Games you're entering</label>
+        <div class="chks" id="gamePicks">
+          <label class="chk"><input type="checkbox" value="FIFA">FIFA</label>
+          <label class="chk"><input type="checkbox" value="Tekken 5">Tekken 5</label>
+          <label class="chk"><input type="checkbox" value="Valorant">Valorant</label>
+          <label class="chk"><input type="checkbox" value="Call of Duty">Call of Duty</label>
+          <label class="chk"><input type="checkbox" value="Mortal Kombat">Mortal Kombat</label>
+          <label class="chk"><input type="checkbox" value="PUBG Mobile">PUBG Mobile</label>
+        </div>
+      </div>
+      <div class="frow">
+        <div class="field"><label>Squad size</label>
+          <select name="squad"><option value="1">Solo (1)</option><option value="2">Duo (2)</option><option value="4">Squad (4)</option><option value="5">Team (5)</option></select>
+        </div>
+        <div class="field"><label>City</label><input name="city" value="Lahore"></div>
+      </div>
+      <div class="field"><label>Anything else (optional)</label><textarea name="notes" rows="2" placeholder="Console preference, teammates, questions…"></textarea></div>
+      <button type="submit" class="btn primary submit" data-track="submit_registration"><iconify-icon icon="mdi:rocket-launch"></iconify-icon> Submit registration</button>
+      <p class="formnote">By registering you agree to the event rules. We'll only use your details to organise Johar Clash.</p>
+      <div class="okmsg" id="okMsg"><iconify-icon icon="mdi:check-circle"></iconify-icon> Registration received — check your inbox/WhatsApp for check-in details. See you at Johar Town!</div>
+    </form>
+  </div>
+</div></section>
+
+<footer><div class="wrap">
+  <span class="brand">JOHAR<span class="slash">/</span><b>CLASH</b></span>
+  <span class="mono">Johar Town · Lahore · 2026 &nbsp;·&nbsp; PKR 25,000 Prize Pool</span>
+  <span class="mono">Register → <a href="#register" style="color:var(--cyan)">join the clash</a></span>
+</div></footer>
+
+<script>
+/* ---- Ecommerce Apps Script API ---- */
+const API_URL = "https://script.google.com/macros/s/AKfycbwn05r3WVqMpV4Tftn4n1qEs7I10cu3Z8S306jMXaXXCClxizt2EfOUSKa9cTha6pPD/exec";
+const API_KEY = "a003c5ef4fd64f54cae76d62925d93d63bc394c733f8a6dd30fdeffadaf990c2";
+const STORE = "Johar Clash — Lahore Gaming Tournament";
+
+function apiPost(payload){
+  try{
+    fetch(API_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},
+      body:JSON.stringify(Object.assign({apiKey:API_KEY,storeName:STORE},payload))});
+  }catch(e){}
+}
+function sid(){let s=localStorage.getItem("jc_sid");if(!s){s="jc_"+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem("jc_sid",s);}return s;}
+
+/* telemetry: page + clicks */
+apiPost({type:"telemetry",sessionId:sid(),event:"page",eventType:"page_view",pageUrl:location.href,userAgent:navigator.userAgent});
+document.querySelectorAll("[data-track]").forEach(el=>{
+  el.addEventListener("click",()=>apiPost({type:"telemetry",sessionId:sid(),event:"click",eventType:"button_click",
+    pageUrl:location.href,elementId:el.getAttribute("data-track"),elementText:(el.textContent||"").trim().slice(0,60),userAgent:navigator.userAgent}));
+});
+
+/* game chip toggles */
+document.querySelectorAll("#gamePicks .chk").forEach(l=>{
+  const cb=l.querySelector("input");
+  l.addEventListener("click",e=>{if(e.target!==cb)cb.checked=!cb.checked;l.classList.toggle("on",cb.checked);});
+});
+
+/* form submit -> order intake */
+document.getElementById("regForm").addEventListener("submit",e=>{
+  e.preventDefault();
+  const f=e.target;
+  const games=[...f.querySelectorAll("#gamePicks input:checked")].map(i=>i.value);
+  const data={
+    type:"order",
+    source:"johar-clash-web",
+    customerName:f.name.value.trim(),
+    email:f.email.value.trim(),
+    phone:f.phone.value.trim(),
+    city:f.city.value.trim()||"Lahore",
+    country:"Pakistan",
+    productId:"johar-clash-2026",
+    productName:"Johar Clash Registration",
+    sku:(games.join("+")||"UNPICKED"),
+    quantity:parseInt(f.squad.value,10)||1,
+    price:0,
+    currency:"PKR",
+    notes:"Team: "+(f.team.value.trim()||"-")+" | Games: "+(games.join(", ")||"none selected")+" | Squad size: "+f.squad.value+" | Notes: "+(f.notes.value.trim()||"-")
+  };
+  apiPost(data);
+  apiPost({type:"telemetry",sessionId:sid(),event:"conversion",eventType:"registration_submit",pageUrl:location.href,elementId:"regForm",elementText:games.join(","),userAgent:navigator.userAgent});
+  document.getElementById("okMsg").classList.add("show");
+  f.querySelector(".submit").innerHTML='<iconify-icon icon="mdi:check-bold"></iconify-icon> Registered';
+  setTimeout(()=>document.getElementById("okMsg").scrollIntoView({behavior:"smooth",block:"center"}),120);
+  f.reset();
+  document.querySelectorAll("#gamePicks .chk.on").forEach(l=>l.classList.remove("on"));
+});
+</script>
+</body>
+</html>
