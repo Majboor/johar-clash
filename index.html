@@ -360,11 +360,55 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
 .dl-card:hover{background:var(--red);color:var(--ink)}
 .dl-card b{font:500 13px/1.2 'DM Mono',monospace;text-transform:uppercase}
 .dl-card span{font:500 9px/1 'DM Mono',monospace;text-transform:uppercase;opacity:.6}
-
+.games-art{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:0 0 9vh}
+@media(max-width:850px){.games-art{grid-template-columns:1fr 1fr}}
+.games-art figure{margin:0;border:1px solid var(--ink);overflow:hidden;background:#0b0c10}
+.games-art img{width:100%;aspect-ratio:1/1;object-fit:cover;display:block;transition:transform .3s var(--ease)}
+.games-art figure:hover img{transform:scale(1.05)}
+.games-art figcaption{font:500 9px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--paper);background:var(--ink);padding:10px 12px}
+/* preloader */
+#jcload{position:fixed;inset:0;z-index:99999;background:var(--paper);display:flex;align-items:center;justify-content:center;transition:opacity .55s var(--ease)}
+#jcload.done{opacity:0;pointer-events:none}
+#jcload .in{width:min(320px,72vw);text-align:center}
+#jcload .mk{font:800 30px/1 'Inter Tight',sans-serif;letter-spacing:-.05em;color:var(--ink)}
+#jcload .mk span{color:var(--red)}
+#jcload .bar{height:3px;background:var(--muted);margin:22px 0 10px;overflow:hidden}
+#jcload .bar i{display:block;height:100%;width:0;background:var(--red);transition:width .25s ease}
+#jcload .pct{font:500 11px/1 'DM Mono',monospace;color:var(--ink)}
+#jcload .sub{font:500 9px/1 'DM Mono',monospace;letter-spacing:.14em;text-transform:uppercase;color:var(--ink);opacity:.55;margin-top:8px}
 </style>
 <script src="https://cdn.tailwindcss.com"></script>
 </head>
 <body class="hero-preload">
+<div id="jcload"><div class="in"><div class="mk">JOHAR<span>/</span>CLASH</div><div class="bar"><i id="jcl-fill"></i></div><div class="pct" id="jcl-pct">0%</div><div class="sub" id="jcl-sub">loading the arena…</div></div></div>
+<script>
+(function(){
+  var ASSETS=[
+    "assets/gg-hero.png","assets/gg-trophy.png","assets/hero-banner.jpg","assets/venue-arena.jpg",
+    "assets/mode-fifa.jpg","assets/mode-tekken.jpg","assets/mode-valorant.jpg","assets/mode-cod.jpg",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-crouch-cutout.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-hero-close-cutout.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-system-padded-cutout.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-lookbook-seated-cutout.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-walk.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-detail.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/transit-shell-ghost-cutout.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-system-exploded-wide.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-hero.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-crouch.png",
+    "https://cdn.jsdelivr.net/gh/VanhDc/aura-assets@main/void03/void-cloth-field.png"
+  ];
+  var ov=document.getElementById("jcload"),fill=document.getElementById("jcl-fill"),pct=document.getElementById("jcl-pct"),
+      total=ASSETS.length,done=0,finished=false,t0=Date.now();
+  function bump(){done++;var f=Math.min(done/total,1);fill.style.width=(f*100).toFixed(0)+"%";pct.textContent=(f*100).toFixed(0)+"%";
+    if(done>=total)finish();}
+  function finish(){if(finished)return;finished=true;fill.style.width="100%";pct.textContent="100%";
+    setTimeout(function(){ov.classList.add("done");setTimeout(function(){ov.remove();},600);},180);}
+  ASSETS.forEach(function(src){var im=new Image();im.onload=bump;im.onerror=bump;im.src=src;});
+  setTimeout(function(){if(!finished)finish();},12000); // safety cap
+  window.addEventListener("load",function(){setTimeout(function(){if(!finished&&done>=total*0.8)finish();},800);});
+})();
+</script>
 <div class="noise" aria-hidden="true"></div>
 <div class="progress" aria-hidden="true"></div>
 <aside class="side-rail"><a href="#top" class="rail-mark">V/</a><span class="rail-name">Johar Clash arena</span><span class="rail-count">JC</span></aside>
@@ -496,6 +540,12 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
 <h2 class="reveal">GAMES<br>ROSTER.</h2>
 <p class="reveal">Six titles, two headliners. Enter one or stack them — every game runs its own bracket for the shared PKR 25,000 pool.</p>
 </div>
+<div class="games-art reveal">
+<figure><img src="assets/mode-fifa.jpg" alt="FIFA"><figcaption>FIFA · 1v1</figcaption></figure>
+<figure><img src="assets/mode-tekken.jpg" alt="Tekken 5"><figcaption>Tekken 5 · 1v1</figcaption></figure>
+<figure><img src="assets/mode-valorant.jpg" alt="Valorant"><figcaption>Valorant · 5v5</figcaption></figure>
+<figure><img src="assets/mode-cod.jpg" alt="Call of Duty"><figcaption>Call of Duty · Squads</figcaption></figure>
+</div>
 <div class="index-table reveal">
 <div class="index-row" data-img="assets/mode-fifa.jpg">
 <span>01</span><b>FIFA</b><span>1v1 / Console / Headliner</span><i>Enter ↗</i></div>
@@ -515,7 +565,10 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
 <section class="jc-sec" id="prize">
   <div class="jc-head"><div><span class="jc-kick">The loot / Split across the podium</span><h2>PKR 25,000 <span>POOL.</span></h2></div><span class="jc-kick">Paid on-site · 09 Aug 2026</span></div>
   <div class="prize-grid">
-    <img class="prize-banner" src="assets/hero-banner.jpg" alt="PKR 25,000 prize pool">
+    <div style="display:grid;grid-template-columns:1.6fr .9fr;gap:16px;align-items:stretch">
+    <img class="prize-banner" src="assets/hero-banner.jpg" alt="PKR 25,000 prize pool" style="height:100%;object-fit:cover">
+    <img class="prize-banner" src="assets/gg-trophy.png" alt="Championship trophy" style="height:100%;object-fit:cover;background:#0b0c10">
+    </div>
     <div class="prize-rows">
       <div class="r win"><span>Champion</span><b>12,000</b></div>
       <div class="r"><span>Runner-up</span><b>7,000</b></div>
