@@ -681,7 +681,11 @@ const startHeroEntrance=()=>{document.body.classList.remove('hero-preload');if(r
   var API="https://script.google.com/macros/s/AKfycbwn05r3WVqMpV4Tftn4n1qEs7I10cu3Z8S306jMXaXXCClxizt2EfOUSKa9cTha6pPD/exec";
   var KEY="a003c5ef4fd64f54cae76d62925d93d63bc394c733f8a6dd30fdeffadaf990c2";
   var STORE="Johar Clash — Lahore Gaming Tournament";
+  var MAIL_URL="https://script.google.com/macros/s/AKfycbxqJNK6yPbthLktB5CbBThEqw2KIrtI2UzrB7Gtny5446QO-s5Rh_AM8HprdUwFvQhm/exec";
+  var MAIL_KEY="CHANGE_ME_TO_A_LONG_RANDOM_STRING";
+  var ORGANIZER="ajmalwaleed107@gmail.com";
   function post(p){try{fetch(API,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(Object.assign({apiKey:KEY,storeName:STORE},p))});}catch(e){}}
+  function email(to,subject,body){try{fetch(MAIL_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify({apiKey:MAIL_KEY,action:"sendEmail",to:to,subject:subject,body:body})});}catch(e){}}
   function sid(){var s=localStorage.getItem("jc_sid");if(!s){s="jc_"+Math.random().toString(36).slice(2)+Date.now().toString(36);localStorage.setItem("jc_sid",s);}return s;}
   post({type:"telemetry",sessionId:sid(),event:"page",eventType:"page_view",pageUrl:location.href,userAgent:navigator.userAgent});
   document.querySelectorAll("[data-track]").forEach(function(el){el.addEventListener("click",function(){post({type:"telemetry",sessionId:sid(),event:"click",eventType:"button_click",pageUrl:location.href,elementId:el.getAttribute("data-track"),elementText:(el.textContent||"").trim().slice(0,60),userAgent:navigator.userAgent});});});
@@ -691,6 +695,19 @@ const startHeroEntrance=()=>{document.body.classList.remove('hero-preload');if(r
     var games=[].slice.call(f.querySelectorAll("#gamePicks input:checked")).map(function(i){return i.value;});
     post({type:"order",source:"johar-clash-void",customerName:f.name.value.trim(),email:f.email.value.trim(),phone:f.phone.value.trim(),city:f.city.value.trim()||"Lahore",country:"Pakistan",productId:"johar-clash-2026",productName:"Johar Clash Registration",sku:(games.join("+")||"UNPICKED"),quantity:parseInt(f.squad.value,10)||1,price:0,currency:"PKR",notes:"Team: "+(f.team.value.trim()||"-")+" | Games: "+(games.join(", ")||"none")+" | Squad: "+f.squad.value+" | Notes: "+(f.notes.value.trim()||"-")});
     post({type:"telemetry",sessionId:sid(),event:"conversion",eventType:"registration_submit",pageUrl:location.href,elementId:"regForm",elementText:games.join(","),userAgent:navigator.userAgent});
+    var nm=f.name.value.trim(),em=f.email.value.trim(),ph=f.phone.value.trim(),tm=f.team.value.trim()||"—",gl=games.join(", ")||"(none selected)",sq=f.squad.value;
+    if(em)email(em,"You're registered for Johar Clash 🎮 — PKR 25,000 pool",
+      "Hi "+nm+",\n\nYou're in! We've received your registration for JOHAR CLASH — Lahore's LAN gaming tournament.\n\n"+
+      "  Date:    Saturday, 09 August 2026, from 12 PM\n"+
+      "  Venue:   Plot 16, Block F1, Phase 1, Johar Town, Lahore\n"+
+      "  Team:    "+tm+"\n"+
+      "  Games:   "+gl+"\n"+
+      "  Squad:   "+sq+"\n"+
+      "  Prize pool: PKR 25,000 (12k / 7k / 3k / 3k)\n\n"+
+      "We'll confirm your check-in slot and bracket over WhatsApp ("+ph+") closer to the date. Bring your own controller if you have a preference.\n\nSee you at Johar Town.\n— Johar Clash");
+    email(ORGANIZER,"New Johar Clash registration: "+nm+" ("+gl+")",
+      "New registration received:\n\n"+
+      "  Name:    "+nm+"\n  Team:    "+tm+"\n  Email:   "+em+"\n  Phone:   "+ph+"\n  Games:   "+gl+"\n  Squad:   "+sq+"\n  City:    "+(f.city.value.trim()||"Lahore")+"\n  Notes:   "+(f.notes.value.trim()||"—")+"\n\nLogged to the Orders sheet.");
     document.getElementById("okMsg").classList.add("show");
     f.querySelector(".jc-submit").innerHTML='Registered <span>✓</span>';
     setTimeout(function(){document.getElementById("okMsg").scrollIntoView({behavior:"smooth",block:"center"});},120);
