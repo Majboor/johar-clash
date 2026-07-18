@@ -1,0 +1,206 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Admin — Johar Clash Portal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--paper:#F1EDE1;--bone:#E7E1D2;--ink:#141414;--red:#E8442A;--blue:#1E46C8;--green:#2f7d3a;--mute:#57544a;--hair:#cfc8b6}
+body{background:var(--paper);color:var(--ink);font:16px/1.5 'Inter',-apple-system,BlinkMacSystemFont,sans-serif}
+.mono{font-family:'DM Mono',ui-monospace,monospace}
+a{color:var(--blue)}
+.wrap{max-width:1200px;margin:0 auto;padding:0 24px}
+.topbar{border-bottom:1px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:20}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:12px}
+.brand{font-weight:800;letter-spacing:-.03em;text-decoration:none;color:var(--ink)}.brand b{color:var(--red)}
+.pill{font:500 10px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;border:1px solid var(--ink);padding:8px 10px}
+header.head{padding:34px 0 20px;border-bottom:1px solid var(--ink)}
+.kick{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--red)}
+h1{font-size:clamp(28px,4vw,44px);font-weight:800;letter-spacing:-.04em;margin:8px 0}
+.gate{max-width:440px;margin:60px auto;border:1px solid var(--ink);background:#fff;padding:26px}
+.gate h2{font-size:20px;margin-bottom:6px}
+.gate p{color:var(--mute);font-size:14px;margin-bottom:16px}
+label{display:block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:0 0 7px}
+input[type=password],input[type=text]{width:100%;background:#fff;border:1px solid var(--ink);padding:12px 13px;font:15px 'Inter';color:var(--ink)}
+input:focus{outline:2px solid var(--blue);outline-offset:1px}
+.btn{font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--paper);border:1px solid var(--ink);padding:13px 18px;cursor:pointer}
+.btn:hover{background:var(--red);border-color:var(--red)}
+.btn.ok{background:var(--green);border-color:var(--green)}.btn.ok:hover{background:#245e2c}
+.btn.no{background:none;color:var(--ink)}.btn.no:hover{background:var(--ink);color:var(--paper)}
+.btn.sm{padding:9px 12px}
+.btn[disabled]{opacity:.5;cursor:not-allowed}
+.bar{display:flex;align-items:center;gap:12px;padding:18px 0;border-bottom:1px solid var(--hair)}
+.count{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mute)}
+.list{padding:20px 0 90px;display:grid;gap:16px}
+.card{border:1px solid var(--ink);background:#fff}
+.card .h{display:flex;gap:12px;align-items:flex-start;padding:16px 18px;border-bottom:1px solid var(--hair);flex-wrap:wrap}
+.kind{font:600 10px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--paper);padding:7px 9px}
+.kind.group{background:var(--blue)}
+.ttl{font-weight:800;letter-spacing:-.02em;font-size:18px}
+.sub{font:500 11px/1.5 'DM Mono',monospace;color:var(--mute);text-transform:uppercase}
+.warn{font:500 10px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;background:var(--red);color:#fff;padding:7px 9px}
+.flag{font:500 10px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;background:#a8641b;color:#fff;padding:7px 9px}
+.meta{padding:14px 18px;font-size:13.5px;color:#333;display:grid;gap:5px;border-bottom:1px solid var(--hair)}
+.meta b{font:500 10px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mute);margin-right:8px}
+.tag{display:inline-block;font:500 9px/1 'DM Mono',monospace;text-transform:uppercase;background:var(--bone);border:1px solid var(--hair);padding:5px 7px;margin:0 5px 5px 0}
+.actions{display:flex;gap:10px;padding:14px 18px;align-items:center;flex-wrap:wrap}
+.spacer{margin-left:auto}
+iframe{width:100%;height:0;border:0;border-top:1px solid var(--ink);background:#fff;transition:height .2s}
+iframe.on{height:520px}
+.msg{padding:11px 14px;border:1px solid var(--ink);font-size:13px;margin:10px 0;display:none}
+.msg.show{display:block}.msg.ok{background:#e7f0e5;border-color:var(--green)}.msg.err{background:#f6e2df;border-color:var(--red)}
+.empty{padding:60px 0;text-align:center;color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+<a class="brand" href="./">JOHAR<b>/</b>CLASH</a>
+<span class="pill" id="pill">Admin</span>
+</div></div>
+
+<div id="gateView">
+<div class="gate">
+<h2>Admin sign-in</h2>
+<p>Enter the admin key to review pending player &amp; team pages.</p>
+<label for="key">Admin key</label>
+<input type="password" id="key" placeholder="••••••••" autocomplete="current-password">
+<div class="msg err" id="gateMsg"></div>
+<div style="margin-top:16px"><button class="btn" id="signin">Sign in →</button></div>
+</div>
+</div>
+
+<div id="panelView" style="display:none">
+<header class="head"><div class="wrap">
+<div class="kick">Moderation queue</div>
+<h1>Pending submissions.</h1>
+</div></header>
+<div class="wrap">
+<div class="bar">
+<button class="btn no sm" id="refresh">↻ Refresh</button>
+<span class="count" id="count"></span>
+<button class="btn no sm spacer" id="signout">Sign out</button>
+</div>
+<div class="list" id="list"></div>
+</div>
+</div>
+
+<script>
+var API="https://johar-api.waleeds.world";
+var $=function(s){return document.querySelector(s)};
+var KEY=sessionStorage.getItem("jc_admin_key")||"";
+function esc(s){return (s==null?"":String(s)).replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+function H(){return {"X-Admin-Key":KEY}}
+
+function show(view){$("#gateView").style.display=view==="gate"?"":"none";$("#panelView").style.display=view==="panel"?"":"none";}
+
+function signIn(k){
+  KEY=k;
+  fetch(API+"/admin/pending",{headers:H()}).then(function(r){
+    if(r.status===401){throw new Error("Wrong key");}
+    return r.json();
+  }).then(function(j){
+    sessionStorage.setItem("jc_admin_key",KEY);
+    show("panel");render(j.items||[]);
+  }).catch(function(e){
+    $("#gateMsg").textContent="✗ "+(e.message==="Wrong key"?"Incorrect admin key.":"Cannot reach the portal API. "+e);
+    $("#gateMsg").classList.add("show");
+  });
+}
+function load(){
+  fetch(API+"/admin/pending",{headers:H()}).then(function(r){
+    if(r.status===401){sessionStorage.removeItem("jc_admin_key");show("gate");return{items:[]};}
+    return r.json();
+  }).then(function(j){render(j.items||[])}).catch(function(){});
+}
+
+function summaryHtml(it){
+  var s=it.summary||{},rows=[];
+  if(it.kind==="profile"){
+    if(s.tagline)rows.push('<div><b>Tagline</b>'+esc(s.tagline)+'</div>');
+    rows.push('<div><b>Looking for team</b>'+(s.lookingForTeam?'yes':'no')+'</div>');
+    if((s.games||[]).length)rows.push('<div><b>Games</b>'+s.games.map(function(g){return '<span class="tag">'+esc(g)+'</span>'}).join('')+'</div>');
+    var soc=Object.keys(s.socials||{});
+    if(soc.length)rows.push('<div><b>Socials</b>'+soc.map(function(k){return '<span class="tag">'+esc(k)+': '+esc(s.socials[k])+'</span>'}).join('')+'</div>');
+    if(s.avatar)rows.push('<div><b>Avatar</b><span class="tag">yes</span></div>');
+  }else{
+    if(s.tagline)rows.push('<div><b>Tagline</b>'+esc(s.tagline)+'</div>');
+    if(s.event)rows.push('<div><b>Event</b>'+esc(s.event)+'</div>');
+    if(s.game)rows.push('<div><b>Game</b>'+esc(s.game)+'</div>');
+    rows.push('<div><b>Open slots</b>'+esc(s.openSlots||0)+'</div>');
+    if((s.members||[]).length)rows.push('<div><b>Members (unverified)</b>'+s.members.map(function(m){return '<span class="tag">@'+esc(m)+'</span>'}).join('')+'</div>');
+  }
+  return rows.join('');
+}
+
+function render(items){
+  $("#count").textContent=(items.length||0)+" pending";
+  if(!items.length){$("#list").innerHTML='<div class="empty">Nothing pending. New submissions will appear here.</div>';return;}
+  $("#list").innerHTML=items.map(function(it){
+    var badges='<span class="kind '+esc(it.kind)+'">'+esc(it.kind==="group"?"team":"player")+'</span>';
+    if(it.overwrite)badges+=' <span class="warn">Overwrites /'+(it.kind==="group"?"g":"u")+'/'+esc(it.slug)+'/</span>';
+    (it.flags||[]).forEach(function(f){badges+=' <span class="flag">flag: '+esc(f)+'</span>';});
+    var prev=API+"/admin/preview/"+encodeURIComponent(it.id)+"?key="+encodeURIComponent(KEY);
+    return '<div class="card" data-id="'+esc(it.id)+'">'+
+      '<div class="h">'+badges+'<div style="flex:1 1 200px"><div class="ttl">'+esc(it.title)+'</div>'+
+        '<div class="sub">'+esc(it.slug)+' · '+esc((it.created||"").slice(0,16).replace("T"," "))+'</div></div></div>'+
+      '<div class="meta">'+summaryHtml(it)+'</div>'+
+      '<div class="msg" data-msg></div>'+
+      '<div class="actions">'+
+        '<button class="btn no sm" data-act="preview">Preview page</button>'+
+        '<a class="btn no sm" href="'+esc(it.page)+'" target="_blank" style="text-decoration:none">Target URL ↗</a>'+
+        '<button class="btn ok sm spacer" data-act="approve">✓ Approve &amp; publish</button>'+
+        '<button class="btn no sm" data-act="reject">Reject</button>'+
+      '</div>'+
+      '<iframe data-frame data-src="'+esc(prev)+'" title="preview"></iframe>'+
+    '</div>';
+  }).join('');
+}
+
+document.addEventListener("click",function(e){
+  var btn=e.target.closest("[data-act]"); if(!btn)return;
+  var card=btn.closest(".card"),id=card.getAttribute("data-id"),act=btn.getAttribute("data-act");
+  var msg=card.querySelector("[data-msg]");
+  if(act==="preview"){
+    var f=card.querySelector("[data-frame]");
+    if(f.classList.contains("on")){f.classList.remove("on");btn.textContent="Preview page";}
+    else{if(!f.src)f.src=f.getAttribute("data-src");f.classList.add("on");btn.textContent="Hide preview";}
+    return;
+  }
+  if(act==="reject"&&!confirm("Reject and discard this submission?"))return;
+  if(act==="approve"&&!confirm("Publish this page live to the site now?"))return;
+  card.querySelectorAll("[data-act]").forEach(function(b){b.disabled=true});
+  msg.className="msg";
+  fetch(API+"/admin/"+act+"/"+encodeURIComponent(id),{method:"POST",headers:H()})
+   .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
+   .then(function(res){
+     if(res.ok&&res.j.ok){
+       msg.className="msg ok show";
+       msg.innerHTML=act==="approve"
+         ? '✓ Published. Live shortly at <a href="'+esc(res.j.page)+'" target="_blank">'+esc(res.j.page)+'</a>'
+         : '✓ Rejected and discarded.';
+       setTimeout(load,1400);
+     }else{
+       msg.className="msg err show";
+       msg.textContent="✗ "+((res.j&&res.j.detail)||"Action failed.");
+       card.querySelectorAll("[data-act]").forEach(function(b){b.disabled=false});
+     }
+   }).catch(function(e){
+     msg.className="msg err show";msg.textContent="✗ Network error: "+e;
+     card.querySelectorAll("[data-act]").forEach(function(b){b.disabled=false});
+   });
+});
+
+$("#signin").onclick=function(){var k=$("#key").value.trim();if(k)signIn(k);};
+$("#key").addEventListener("keydown",function(e){if(e.key==="Enter")$("#signin").click();});
+$("#refresh").onclick=load;
+$("#signout").onclick=function(){sessionStorage.removeItem("jc_admin_key");KEY="";show("gate");};
+
+if(KEY)signIn(KEY);else show("gate");
+</script>
+</body>
+</html>

@@ -198,15 +198,26 @@ var $=function(s){return document.querySelector(s)};
 function slug(s){return (s||"").toLowerCase().trim().replace(/[\s_]+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,32)}
 function mdHtml(t){try{return DOMPurify.sanitize(marked.parse(t||"",{breaks:true,gfm:true}),{ALLOWED_TAGS:["h1","h2","h3","h4","h5","h6","p","br","hr","blockquote","ul","ol","li","strong","em","b","i","code","pre","a","img","table","thead","tbody","tr","th","td","del","span","div"],ALLOWED_ATTR:["href","title","target","rel","src","alt","class","align"],ALLOWED_URI_REGEXP:/^(?:(?:https?|mailto):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i})}catch(e){return""}}
 
-// ---- registration gate + prefill ----
+// ---- registration gate + prefill (+ UTM invite bypass) ----
 (function(){
+  // An invite link carrying a utm parameter (e.g. ?utm_source=invite) always
+  // unlocks the portal — the username field is available with no registration.
+  var params=new URLSearchParams(location.search);
+  var hasUtm=false; params.forEach(function(v,k){ if(k.toLowerCase().indexOf("utm_")===0) hasUtm=true; });
+  if(hasUtm){ try{localStorage.setItem("jc_invited","1");}catch(e){} }
+  var invited = hasUtm || localStorage.getItem("jc_invited")==="1";
+
   var reg=null; try{reg=JSON.parse(localStorage.getItem("jc_reg")||"null")}catch(e){}
-  if(!reg){ $("#gate").classList.add("show"); }
-  else{
+  if(reg){
     if(reg.name){$("#displayName").value=reg.name;$("#username").value=slug(reg.name);}
     if(reg.team){var ts=slug(reg.team);$("#t_name").value=reg.team;$("#t_slug").value=ts;$("#turlhint").textContent="/g/"+(ts||"…")+"/";}
     var nm=(reg.name?", "+reg.name:"");
     $("#gate").innerHTML="<b style=\"color:var(--blue)\">Welcome back"+nm+".</b> We've prefilled your profile from your registration — edit anything below. Your username becomes your public /u/… page URL.";
+    $("#gate").classList.add("show");
+  } else if(invited){
+    $("#gate").innerHTML="<b style=\"color:var(--blue)\">Invite access.</b> You're in — pick any username below (that becomes your public /u/… page URL) and build your page. No registration needed.";
+    $("#gate").classList.add("show");
+  } else {
     $("#gate").classList.add("show");
   }
   syncUrl();
@@ -279,7 +290,7 @@ function post(url,body,btn,msg,doneWord){
      if(res.ok&&res.j.ok){
        btn.disabled=true;btn.textContent="Submitted ✓";
        msg.className="msg ok show";
-       msg.innerHTML="✓ "+doneWord+" — submitted for review. It publishes at <a href=\""+res.j.page+"\" target=\"_blank\">"+res.j.page+"</a> once an organizer merges it.<br><span class='mono' style='font-size:12px'>Track it: <a href=\""+res.j.pr+"\" target=\"_blank\">"+res.j.pr+"</a></span><br>Edit any field and submit again to update this review.";
+       msg.innerHTML="✓ "+doneWord+" — submitted for review. An organizer approves it in the admin panel, then it goes live at <a href=\""+res.j.page+"\" target=\"_blank\">"+res.j.page+"</a>.<br>Edit any field and submit again to replace your pending submission.";
        var panel=btn.closest(".panel");
        if(panel){var restore=function(){btn.disabled=false;btn.textContent=old;panel.removeEventListener("input",restore);};panel.addEventListener("input",restore);}
      }else{
