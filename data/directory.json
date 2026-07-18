@@ -1,1 +1,21 @@
-[]
+[
+  {
+    "username": "carolos",
+    "displayName": "Joseph",
+    "tagline": "Fifa deadly player",
+    "avatar": "/johar-clash/u/carolos/avatar.jpg",
+    "games": [
+      "FIFA"
+    ],
+    "lookingForTeam": true,
+    "socials": {
+      "instagram": "wals",
+      "linkedin": "wals",
+      "twitch": "wals",
+      "youtube": "wals",
+      "x": "wals",
+      "discord": "wals"
+    },
+    "updated": "2026-07-18T23:41:07.058453+00:00"
+  }
+]
