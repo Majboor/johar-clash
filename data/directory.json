@@ -17,5 +17,17 @@
       "discord": "wals"
     },
     "updated": "2026-07-18T23:41:07.058453+00:00"
+  },
+  {
+    "username": "editor-test",
+    "displayName": "Editor Test",
+    "tagline": "visual editor check",
+    "avatar": "",
+    "games": [
+      "FIFA"
+    ],
+    "lookingForTeam": false,
+    "socials": {},
+    "updated": "2026-07-18T23:50:14.650636+00:00"
   }
 ]
