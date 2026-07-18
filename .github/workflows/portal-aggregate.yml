@@ -1,0 +1,36 @@
+name: Portal directory aggregate
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'u/**'
+      - 'g/**'
+      - 'scripts/aggregate.py'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: portal-aggregate
+  cancel-in-progress: false
+
+jobs:
+  aggregate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Rebuild directory + teams JSON
+        run: python3 scripts/aggregate.py
+      - name: Commit if changed
+        run: |
+          git config user.name  "github-actions[bot]"
+          git config user.email "github-actions[bot]@users.noreply.github.com"
+          if ! git diff --quiet -- data/; then
+            git add data/directory.json data/teams.json
+            git commit -m "chore: rebuild portal directory [skip ci]"
+            git push
+          else
+            echo "no directory changes"
+          fi

@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Players — Find a teammate · Johar Clash</title>
+<meta name="description" content="Browse registered Johar Clash players, filter by game, and find teammates looking for a squad.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--paper:#F1EDE1;--bone:#E7E1D2;--ink:#141414;--red:#E8442A;--blue:#1E46C8;--mute:#6d6a60;--hair:#cfc8b6}
+body{background:var(--paper);color:var(--ink);font:16px/1.55 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
+a{color:inherit}.mono{font-family:'DM Mono',ui-monospace,monospace}
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
+.topbar{border-bottom:1px solid var(--ink);position:sticky;top:0;background:var(--paper);z-index:20}
+.topbar .wrap{display:flex;align-items:center;justify-content:space-between;height:56px;gap:16px}
+.brand{font-weight:800;letter-spacing:-.03em;text-decoration:none}.brand b{color:var(--red)}
+.navlinks{display:flex;gap:6px;flex-wrap:wrap}
+.navlinks a{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;text-decoration:none;border:1px solid var(--ink);padding:9px 11px}
+.navlinks a:hover,.navlinks a.on{background:var(--ink);color:var(--paper)}
+header.head{padding:44px 0 22px;border-bottom:1px solid var(--ink)}
+.kick{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--red)}
+h1{font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-.04em;line-height:.95;margin:8px 0}
+.lead{color:#333;max-width:60ch}
+.filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:20px 0;border-bottom:1px solid var(--ink)}
+.filters input{background:#fff;border:1px solid var(--ink);padding:11px 13px;font:14px 'Inter';min-width:220px}
+.chip{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--ink);padding:9px 12px;cursor:pointer;background:#fff}
+.chip.on{background:var(--ink);color:var(--paper)}.chip.open.on{background:var(--blue);border-color:var(--blue)}
+.count{margin-left:auto;font:500 11px/1 'DM Mono',monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:16px;padding:26px 0 90px}
+.card{border:1px solid var(--ink);background:#fff;text-decoration:none;display:flex;flex-direction:column;transition:.15s}
+.card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 var(--ink)}
+.card .top{display:flex;gap:13px;padding:16px;border-bottom:1px solid var(--hair);align-items:center}
+.av{width:56px;height:56px;border:1px solid var(--ink);object-fit:cover;background:var(--bone);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font:800 22px/1 'Inter';color:var(--mute)}
+.nm{font-weight:800;letter-spacing:-.02em;line-height:1.05}
+.un{font:500 10px/1.4 'DM Mono',monospace;color:var(--red);text-transform:uppercase}
+.tag{font:500 9px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--paper);padding:6px 8px;margin:0 6px 6px 0;display:inline-block}
+.tag.open{background:var(--blue)}
+.card .tl{padding:14px 16px;font-size:13.5px;color:#333;flex:1}
+.card .tags{padding:0 16px 14px}
+.empty{padding:60px 0;text-align:center;color:var(--mute)}
+.empty a{color:var(--blue);font-weight:600}
+footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+</style>
+</head>
+<body>
+<div class="topbar"><div class="wrap">
+<a class="brand" href="./">JOHAR<b>/</b>CLASH</a>
+<div class="navlinks">
+<a href="portal.html">Portal</a>
+<a href="players.html" class="on">Players</a>
+<a href="teams.html">Teams</a>
+<a href="./#register">Register</a>
+</div>
+</div></div>
+
+<header class="head"><div class="wrap">
+<div class="kick">Find a teammate</div>
+<h1>Players.</h1>
+<p class="lead">Everyone who's built a player page. Filter by game, or show only players actively looking for a squad.</p>
+</div></header>
+
+<div class="wrap">
+<div class="filters" id="filters">
+<input type="text" id="q" placeholder="Search name or username…">
+<span class="chip open" data-f="open">Looking for a team</span>
+<span class="count" id="count"></span>
+</div>
+<div class="grid" id="grid"></div>
+</div>
+
+<footer><div class="wrap">Johar Clash · build your own page in the <a href="portal.html" style="color:var(--blue)">portal</a></div></footer>
+
+<script>
+var GAMES=["FIFA","Tekken 5","Valorant","Call of Duty","Mortal Kombat","PUBG Mobile"];
+var $=function(s){return document.querySelector(s)};
+var data=[], gameF={}, openF=false, q="";
+function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
+
+// game filter chips
+GAMES.forEach(function(g){
+  var c=document.createElement("span");c.className="chip";c.textContent=g;
+  c.onclick=function(){gameF[g]=!gameF[g];c.classList.toggle("on");render()};
+  $("#filters").insertBefore(c,$("#count"));
+});
+$("[data-f=open]").onclick=function(){openF=!openF;this.classList.toggle("on");render()};
+$("#q").oninput=function(){q=this.value.toLowerCase();render()};
+
+function card(p){
+  var av=p.avatar?'<img class="av" src="'+esc(p.avatar)+'" alt="">':'<div class="av">'+esc((p.displayName||p.username||"?")[0].toUpperCase())+'</div>';
+  var tags="";
+  if(p.lookingForTeam)tags+='<span class="tag open">Looking for a team</span>';
+  (p.games||[]).slice(0,4).forEach(function(g){tags+='<span class="tag">'+esc(g)+'</span>'});
+  return '<a class="card" href="u/'+esc(p.username)+'/">'+
+    '<div class="top">'+av+'<div><div class="nm">'+esc(p.displayName||p.username)+'</div><div class="un">@'+esc(p.username)+'</div></div></div>'+
+    (p.tagline?'<div class="tl">'+esc(p.tagline)+'</div>':'<div class="tl" style="color:#aaa">—</div>')+
+    (tags?'<div class="tags">'+tags+'</div>':'')+'</a>';
+}
+function render(){
+  var af=GAMES.filter(function(g){return gameF[g]});
+  var list=data.filter(function(p){
+    if(openF&&!p.lookingForTeam)return false;
+    if(af.length&&!(p.games||[]).some(function(g){return af.indexOf(g)>=0}))return false;
+    if(q&&!((p.displayName||"")+" "+(p.username||"")).toLowerCase().includes(q))return false;
+    return true;
+  });
+  $("#count").textContent=list.length+" / "+data.length+" players";
+  $("#grid").innerHTML=list.length?list.map(card).join(""):
+    '<div class="empty">No players match yet. <a href="portal.html">Build the first page ↗</a></div>';
+}
+fetch("data/directory.json?c="+Date.now()).then(function(r){return r.ok?r.json():[]}).then(function(d){
+  data=(d||[]).sort(function(a,b){return (b.updated||"").localeCompare(a.updated||"")});render();
+}).catch(function(){data=[];render();});
+</script>
+</body>
+</html>

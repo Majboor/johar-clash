@@ -436,7 +436,7 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
 <div class="progress" aria-hidden="true"></div>
 <aside class="side-rail"><a href="#top" class="rail-mark">V/</a><span class="rail-name">Johar Clash arena</span><span class="rail-count">JC</span></aside>
 <header class="topbar"><span>Johar Clash / Lahore gaming tournament</span>
-<nav class="top-mid"><a href="#games">Games</a><a href="#prize">Prize</a><a href="#venue">Venue</a></nav>
+<nav class="top-mid"><a href="#games">Games</a><a href="#prize">Prize</a><a href="#venue">Venue</a><a href="players.html">Players</a><a href="teams.html">Teams</a><a href="portal.html">Portal</a></nav>
 <div class="top-end"><span>PKR 25,000 pool</span><a class="bag" href="#register">Register</a></div>
 </header>
 <main id="top">
@@ -645,7 +645,7 @@ body.hero-preload .launch-visual,body.hero-preload .launch h1,body.hero-preload 
       <div><label>Anything else (optional)</label><textarea name="notes" rows="2" placeholder="Console preference, teammates, questions…"></textarea></div>
       <button type="submit" class="jc-submit" data-track="submit_registration">Submit registration <span>→</span></button>
       <p class="jc-note">By registering you agree to the event rules. We’ll only use your details to organise Johar Clash.</p>
-      <div class="jc-ok" id="okMsg">✓ Registration received — check your inbox / WhatsApp for check-in details. See you at Johar Town.</div>
+      <div class="jc-ok" id="okMsg">✓ Registration received — check your inbox / WhatsApp for check-in details.<br><a href="portal.html" data-track="build_page" style="display:inline-block;margin-top:12px;font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;background:var(--ink,#141414);color:var(--paper,#F1EDE1);padding:13px 18px">Build your player page →</a></div>
     </form>
   </div>
 </section>
@@ -763,6 +763,7 @@ const startHeroEntrance=()=>{document.body.classList.remove('hero-preload');if(r
     post({type:"order",source:"johar-clash-void",customerName:f.name.value.trim(),email:f.email.value.trim(),phone:f.phone.value.trim(),city:f.city.value.trim()||"Lahore",country:"Pakistan",productId:"johar-clash-2026",productName:"Johar Clash Registration",sku:(games.join("+")||"UNPICKED"),quantity:parseInt(f.squad.value,10)||1,price:0,currency:"PKR",notes:"Team: "+(f.team.value.trim()||"-")+" | Games: "+(games.join(", ")||"none")+" | Squad: "+f.squad.value+" | Notes: "+(f.notes.value.trim()||"-")});
     post({type:"telemetry",sessionId:sid(),event:"conversion",eventType:"registration_submit",pageUrl:location.href,elementId:"regForm",elementText:games.join(","),userAgent:navigator.userAgent});
     var nm=f.name.value.trim(),em=f.email.value.trim(),ph=f.phone.value.trim(),tm=f.team.value.trim()||"—",gl=games.join(", ")||"(none selected)",sq=f.squad.value;
+    try{localStorage.setItem("jc_reg",JSON.stringify({name:nm,email:em,phone:ph,team:f.team.value.trim(),games:games,ts:Date.now()}));}catch(_e){}
     if(em)email(em,"You're registered for Johar Clash 🎮 — PKR 25,000 pool",
       "Hi "+nm+",\n\nYou're in! We've received your registration for JOHAR CLASH — Lahore's LAN gaming tournament.\n\n"+
       "  Date:    Saturday, 09 August 2026, from 12 PM\n"+
