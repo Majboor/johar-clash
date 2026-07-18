@@ -7,6 +7,7 @@
 <meta name="description" content="Registered for Johar Clash? Build your own player page with a markdown editor, find teammates, and create your team.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -33,16 +34,20 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.04em;line-hei
 .panel{display:none;padding:28px 0 90px}.panel.on{display:block}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:34px}
 @media(max-width:900px){.grid{grid-template-columns:1fr}}
+@media(max-width:560px){.topbar .wrap{height:auto;min-height:56px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}.navlinks{width:100%}}
+@media(max-width:560px){.row2{grid-template-columns:1fr}}
 label{display:block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:16px 0 7px}
 input[type=text],input[type=email],textarea,select{width:100%;background:#fff;border:1px solid var(--ink);padding:12px 13px;font:15px/1.5 'Inter',sans-serif;color:var(--ink)}
+input[type=text]:focus,input[type=email]:focus,textarea:focus,select:focus{outline:2px solid var(--blue);outline-offset:0}
 textarea{resize:vertical;min-height:120px}
 textarea.editor{min-height:340px;font-family:'DM Mono',monospace;font-size:13.5px;line-height:1.6}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .hint{font-size:12px;color:var(--mute);margin-top:5px}
 .avatarrow{display:flex;gap:16px;align-items:center;margin-top:8px}
 .avprev{width:92px;height:92px;border:1px solid var(--ink);object-fit:cover;background:var(--bone);display:flex;align-items:center;justify-content:center;font:800 34px/1 'Inter';color:var(--mute)}
-.chip{display:inline-block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--ink);padding:9px 12px;margin:0 8px 8px 0;cursor:pointer;user-select:none;background:#fff}
+.chip{display:inline-block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--ink);padding:9px 12px;margin:0 8px 8px 0;cursor:pointer;user-select:none;background:#fff;appearance:none;-webkit-appearance:none;text-align:inherit}
 .chip.on{background:var(--ink);color:var(--paper)}
+.chip:focus-visible,.toggle:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .toggle{display:flex;align-items:center;gap:12px;margin-top:14px;cursor:pointer}
 .toggle .sw{width:44px;height:24px;border:1px solid var(--ink);background:#fff;position:relative;flex:0 0 auto}
 .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--ink);transition:.15s}
@@ -52,13 +57,15 @@ textarea.editor{min-height:340px;font-family:'DM Mono',monospace;font-size:13.5p
 .btn[disabled]{opacity:.5;cursor:not-allowed}
 .btn.ghost{background:none;color:var(--ink)}.btn.ghost:hover{background:var(--ink);color:var(--paper)}
 .preview{border:1px solid var(--ink);background:#fff;padding:22px 24px;min-height:340px;overflow:auto}
-.preview h1,.preview h2,.preview h3{letter-spacing:-.02em;margin:1.1em 0 .4em;line-height:1.15}
-.preview h1{font-size:26px}.preview h2{font-size:21px}.preview h3{font-size:17px}
+.preview h1,.preview h2,.preview h3{letter-spacing:-.03em;margin:1.4em 0 .5em;line-height:1.1}
+.preview h1{font-size:32px}.preview h2{font-size:25px}.preview h3{font-size:20px}
 .preview p{margin:0 0 .8em}.preview ul,.preview ol{margin:0 0 .8em 1.3em}
-.preview a{color:var(--blue)}.preview img{max-width:100%}
-.preview blockquote{border-left:3px solid var(--red);padding-left:14px;color:var(--mute);margin:0 0 .8em}
-.preview pre{background:var(--ink);color:#eee;padding:12px;overflow:auto;font-size:12px}
+.preview a{color:var(--blue);text-decoration:underline}.preview img{max-width:100%}
+.preview blockquote{border-left:3px solid var(--red);padding-left:16px;color:var(--mute);margin:0 0 .8em}
+.preview pre{background:var(--ink);color:#f2f2f2;padding:16px;overflow:auto;font-size:13px}
 .preview code{font-family:'DM Mono',monospace}
+.preview table{border-collapse:collapse;width:100%;margin:0 0 .8em}
+.preview th,.preview td{border:1px solid var(--hair);padding:8px 10px;text-align:left}
 .pcard{border:1px solid var(--ink);padding:18px 20px;background:var(--bone);position:sticky;top:78px}
 .msg{margin-top:18px;padding:14px 16px;border:1px solid var(--ink);font-size:14px;display:none}
 .msg.show{display:block}.msg.ok{background:#e7f0e5;border-color:#3a7d44}.msg.err{background:#f6e2df;border-color:var(--red)}
@@ -68,7 +75,7 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 </style>
 </head>
 <body>
-<div class="topbar"><div class="wrap">
+<nav class="topbar" aria-label="Primary"><div class="wrap">
 <a class="brand" href="./">JOHAR<b>/</b>CLASH</a>
 <div class="navlinks">
 <a href="portal.html" class="on">Portal</a>
@@ -76,63 +83,64 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 <a href="teams.html">Teams</a>
 <a href="./#register">Register</a>
 </div>
-</div></div>
+</div></nav>
 
 <header class="head"><div class="wrap">
 <div class="kick">Player portal · build & publish</div>
 <h1>Build your player page.</h1>
-<p class="lead">Registered for Johar Clash? Design your own page with a live markdown editor, set your profile, find a squad, or start a team. Hit publish and it goes live on the site after a quick review.</p>
+<p class="lead">Registered for Johar Clash? Design your own page with a live markdown editor, set your profile, <a href="players.html" style="color:var(--blue);font-weight:600">find a squad</a>, or start a team. Hit publish and it goes live on the site after a quick review.</p>
 <div class="gate" id="gate">
 <b>Heads up —</b> the portal is for registered players. <a href="./#register" style="color:var(--blue);font-weight:600">Register first ↗</a>, then come back — your details will be waiting here.
 </div>
 </div></header>
 
 <div class="wrap">
-<div class="tabbar">
-<button data-tab="me" class="on">① My player page</button>
-<button data-tab="team">② Create a team</button>
+<main>
+<div class="tabbar" role="tablist">
+<button id="tab-me" data-tab="me" class="on" role="tab" aria-selected="true" aria-controls="panel-me">① My player page</button>
+<button id="tab-team" data-tab="team" role="tab" aria-selected="false" aria-controls="panel-team">② Create a team</button>
 </div>
 
 <!-- ============ PLAYER PANEL ============ -->
-<section class="panel on" id="panel-me">
+<section class="panel on" id="panel-me" role="tabpanel" aria-labelledby="tab-me">
 <div class="grid">
 <div>
 <div class="sectlabel">Profile — locked header (not markdown)</div>
 <div class="avatarrow">
 <div class="avprev" id="avPrev">P</div>
 <div>
-<label style="margin-top:0">Profile photo</label>
+<label style="margin-top:0" for="avFile">Profile photo</label>
 <input type="file" id="avFile" accept="image/*">
 <div class="hint">Square works best · max 2.5MB · shown at the top of your page.</div>
 </div>
 </div>
 <div class="row2">
-<div><label>Display name</label><input type="text" id="displayName" placeholder="Your gamer name" maxlength="40"></div>
-<div><label>Username (your URL)</label><input type="text" id="username" placeholder="e.g. shadow" maxlength="32"><div class="hint mono" id="urlhint">/u/…</div></div>
+<div><label for="displayName">Display name</label><input type="text" id="displayName" placeholder="Your gamer name" maxlength="40"></div>
+<div><label for="username">Username (your URL)</label><input type="text" id="username" placeholder="e.g. shadow" maxlength="32"><div class="hint mono" id="urlhint">/u/…</div></div>
 </div>
-<label>One-line description</label>
+<label for="tagline">One-line description</label>
 <input type="text" id="tagline" placeholder="FIFA main · looking for a Valorant squad" maxlength="120">
 <div class="sectlabel">Socials</div>
 <div class="row2">
-<div><label>Instagram</label><input type="text" id="s_instagram" placeholder="username"></div>
-<div><label>LinkedIn</label><input type="text" id="s_linkedin" placeholder="username or URL"></div>
+<div><label for="s_instagram">Instagram</label><input type="text" id="s_instagram" placeholder="username"></div>
+<div><label for="s_linkedin">LinkedIn</label><input type="text" id="s_linkedin" placeholder="username or URL"></div>
 </div>
 <div class="row2">
-<div><label>Twitch</label><input type="text" id="s_twitch" placeholder="username"></div>
-<div><label>YouTube</label><input type="text" id="s_youtube" placeholder="handle"></div>
+<div><label for="s_twitch">Twitch</label><input type="text" id="s_twitch" placeholder="username"></div>
+<div><label for="s_youtube">YouTube</label><input type="text" id="s_youtube" placeholder="handle"></div>
 </div>
 <div class="row2">
-<div><label>X / Twitter</label><input type="text" id="s_x" placeholder="username"></div>
-<div><label>Discord</label><input type="text" id="s_discord" placeholder="name#0000"></div>
+<div><label for="s_x">X / Twitter</label><input type="text" id="s_x" placeholder="username"></div>
+<div><label for="s_discord">Discord</label><input type="text" id="s_discord" placeholder="name#0000"></div>
 </div>
 <div class="sectlabel">Games you play</div>
 <div id="games"></div>
-<div class="toggle" id="lft"><div class="sw"></div><span class="mono" style="font-size:12px;text-transform:uppercase;letter-spacing:.06em">Looking for a team</span></div>
+<div class="toggle" id="lft" role="switch" tabindex="0" aria-checked="false"><div class="sw"></div><span class="mono" style="font-size:12px;text-transform:uppercase;letter-spacing:.06em">Looking for a team</span></div>
 </div>
 
 <div>
 <div class="sectlabel">Your page — write in markdown</div>
-<label>Markdown editor</label>
+<label for="md">Markdown editor</label>
 <textarea class="editor" id="md" placeholder="## About me&#10;Tell people how you play, your best games, your schedule…&#10;&#10;- Main: FIFA&#10;- Also: Valorant, Tekken 5&#10;&#10;> Add me on Discord to scrim."></textarea>
 <div class="hint">Supports headings, **bold**, lists, links, images, quotes, tables. Your locked profile header (photo, name, tagline, socials) is added automatically — you don't write it here.</div>
 <label>Live preview</label>
@@ -144,28 +152,28 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 </section>
 
 <!-- ============ TEAM PANEL ============ -->
-<section class="panel" id="panel-team">
+<section class="panel" id="panel-team" role="tabpanel" aria-labelledby="tab-team">
 <div class="grid">
 <div>
 <div class="sectlabel">Team — locked header</div>
 <div class="row2">
-<div><label>Team name</label><input type="text" id="t_name" placeholder="e.g. Johar Raptors" maxlength="48"></div>
-<div><label>Slug (URL)</label><input type="text" id="t_slug" placeholder="johar-raptors" maxlength="32"><div class="hint mono" id="turlhint">/g/…</div></div>
+<div><label for="t_name">Team name</label><input type="text" id="t_name" placeholder="e.g. Johar Raptors" maxlength="48"></div>
+<div><label for="t_slug">Slug (URL)</label><input type="text" id="t_slug" placeholder="johar-raptors" maxlength="32"><div class="hint mono" id="turlhint">/g/…</div></div>
 </div>
 <div class="row2">
-<div><label>Event</label><input type="text" id="t_event" placeholder="Johar Clash 2026"></div>
-<div><label>Game</label><input type="text" id="t_game" placeholder="Valorant"></div>
+<div><label for="t_event">Event</label><input type="text" id="t_event" placeholder="Johar Clash 2026"></div>
+<div><label for="t_game">Game</label><input type="text" id="t_game" placeholder="Valorant"></div>
 </div>
-<label>One-line description</label>
+<label for="t_tagline">One-line description</label>
 <input type="text" id="t_tagline" placeholder="Comp Valorant squad · 2 slots open" maxlength="120">
 <div class="row2">
-<div><label>Open slots</label><input type="text" id="t_slots" placeholder="2" inputmode="numeric"></div>
-<div><label>Members (comma-separated usernames)</label><input type="text" id="t_members" placeholder="shadow, ace, rizz"></div>
+<div><label for="t_slots">Open slots</label><input type="text" id="t_slots" placeholder="2" inputmode="numeric"></div>
+<div><label for="t_members">Members (comma-separated usernames)</label><input type="text" id="t_members" placeholder="shadow, ace, rizz"></div>
 </div>
 </div>
 <div>
 <div class="sectlabel">Team page — markdown</div>
-<label>Markdown editor</label>
+<label for="t_md">Markdown editor</label>
 <textarea class="editor" id="t_md" placeholder="## About the team&#10;Roster, playstyle, tryout details, practice times…"></textarea>
 <label>Live preview</label>
 <div class="preview" id="t_prev"></div>
@@ -174,18 +182,21 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 <button class="btn" id="teamBtn">Create team page →</button>
 <div class="msg" id="teamMsg"></div>
 </section>
+</main>
 </div>
 
 <footer><div class="wrap">Johar Clash · Lahore LAN Tournament · pages are reviewed before they go live</div></footer>
 
-<script src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 <script>
+// suppress bare-URL autolinking so preview matches python-markdown publish output (#20)
+document.addEventListener("DOMContentLoaded",function(){try{marked.use({tokenizer:{url:function(){return undefined;}}});}catch(e){}});
 var API="https://johar-api.waleeds.world";
 var GAMES=["FIFA","Tekken 5","Valorant","Call of Duty","Mortal Kombat","PUBG Mobile"];
 var $=function(s){return document.querySelector(s)};
 function slug(s){return (s||"").toLowerCase().trim().replace(/[\s_]+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,32)}
-function mdHtml(t){try{return DOMPurify.sanitize(marked.parse(t||""))}catch(e){return""}}
+function mdHtml(t){try{return DOMPurify.sanitize(marked.parse(t||"",{breaks:true,gfm:true}),{ALLOWED_TAGS:["h1","h2","h3","h4","h5","h6","p","br","hr","blockquote","ul","ol","li","strong","em","b","i","code","pre","a","img","table","thead","tbody","tr","th","td","del","span","div"],ALLOWED_ATTR:["href","title","target","rel","src","alt","class","align"],ALLOWED_URI_REGEXP:/^(?:(?:https?|mailto):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i})}catch(e){return""}}
 
 // ---- registration gate + prefill ----
 (function(){
@@ -193,27 +204,41 @@ function mdHtml(t){try{return DOMPurify.sanitize(marked.parse(t||""))}catch(e){r
   if(!reg){ $("#gate").classList.add("show"); }
   else{
     if(reg.name){$("#displayName").value=reg.name;$("#username").value=slug(reg.name);}
+    if(reg.team){var ts=slug(reg.team);$("#t_name").value=reg.team;$("#t_slug").value=ts;$("#turlhint").textContent="/g/"+(ts||"…")+"/";}
+    var nm=(reg.name?", "+reg.name:"");
+    $("#gate").innerHTML="<b style=\"color:var(--blue)\">Welcome back"+nm+".</b> We've prefilled your profile from your registration — edit anything below. Your username becomes your public /u/… page URL.";
+    $("#gate").classList.add("show");
   }
   syncUrl();
 })();
 
 // ---- tabs ----
+function activateTab(n){
+  document.querySelectorAll(".tabbar button").forEach(function(x){x.classList.remove("on");x.setAttribute("aria-selected","false")});
+  document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on")});
+  var b=$("#tab-"+n); if(b){b.classList.add("on");b.setAttribute("aria-selected","true");}
+  var p=$("#panel-"+n); if(p)p.classList.add("on");
+}
 document.querySelectorAll(".tabbar button").forEach(function(b){
-  b.onclick=function(){
-    document.querySelectorAll(".tabbar button").forEach(function(x){x.classList.remove("on")});
-    document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on")});
-    b.classList.add("on"); $("#panel-"+b.dataset.tab).classList.add("on");
-  };
+  b.onclick=function(){ activateTab(b.dataset.tab); location.hash=b.dataset.tab; };
 });
+if(location.hash==="#team")activateTab("team");
 
 // ---- games chips ----
 var gamesSel={};
+try{var _rg=JSON.parse(localStorage.getItem("jc_reg")||"null");if(_rg&&_rg.games)_rg.games.forEach(function(g){if(GAMES.indexOf(g)>=0)gamesSel[g]=true;});}catch(e){}
 GAMES.forEach(function(g){
-  var c=document.createElement("span");c.className="chip";c.textContent=g;
-  c.onclick=function(){gamesSel[g]=!gamesSel[g];c.classList.toggle("on")};
+  var c=document.createElement("button");c.type="button";c.className="chip"+(gamesSel[g]?" on":"");c.textContent=g;
+  c.setAttribute("aria-pressed",String(!!gamesSel[g]));
+  c.onclick=function(){gamesSel[g]=!gamesSel[g];c.setAttribute("aria-pressed",String(c.classList.toggle("on")))};
   $("#games").appendChild(c);
 });
-$("#lft").onclick=function(){this.classList.toggle("on")};
+function toggleLft(){$("#lft").setAttribute("aria-checked",String($("#lft").classList.toggle("on")));}
+$("#lft").onclick=toggleLft;
+$("#lft").onkeydown=function(e){
+  if(e.key==="Enter"){toggleLft();}
+  else if(e.key===" "||e.key==="Spacebar"){e.preventDefault();toggleLft();}
+};
 
 // ---- avatar ----
 var avatarData=null;
@@ -246,16 +271,19 @@ function socials(){
 function games(){return GAMES.filter(function(g){return gamesSel[g]})}
 
 function post(url,body,btn,msg,doneWord){
-  btn.disabled=true;var old=btn.textContent;btn.textContent="Publishing…";
+  btn.disabled=true;var old=btn.textContent;btn.textContent="Submitting…";
   msg.className="msg";
   fetch(API+url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
    .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
    .then(function(res){
-     btn.disabled=false;btn.textContent=old;
      if(res.ok&&res.j.ok){
+       btn.disabled=true;btn.textContent="Submitted ✓";
        msg.className="msg ok show";
-       msg.innerHTML="✓ "+doneWord+" submitted for review. It publishes at <a href=\""+res.j.page+"\" target=\"_blank\">"+res.j.page+"</a> once an organizer merges it.<br><span class='mono' style='font-size:12px'>Track it: <a href=\""+res.j.pr+"\" target=\"_blank\">"+res.j.pr+"</a></span>";
+       msg.innerHTML="✓ "+doneWord+" — submitted for review. It publishes at <a href=\""+res.j.page+"\" target=\"_blank\">"+res.j.page+"</a> once an organizer merges it.<br><span class='mono' style='font-size:12px'>Track it: <a href=\""+res.j.pr+"\" target=\"_blank\">"+res.j.pr+"</a></span><br>Edit any field and submit again to update this review.";
+       var panel=btn.closest(".panel");
+       if(panel){var restore=function(){btn.disabled=false;btn.textContent=old;panel.removeEventListener("input",restore);};panel.addEventListener("input",restore);}
      }else{
+       btn.disabled=false;btn.textContent=old;
        msg.className="msg err show";
        msg.textContent="✗ "+((res.j&&res.j.detail)||"Something went wrong. Try again.");
      }
@@ -268,6 +296,7 @@ function post(url,body,btn,msg,doneWord){
 $("#pubBtn").onclick=function(){
   var u=slug($("#username").value||$("#displayName").value);
   if(!u){$("#meMsg").className="msg err show";$("#meMsg").textContent="✗ Enter a display name or username.";return;}
+  var body=$("#md").value.trim(); if(body.length<10){$("#meMsg").className="msg err show";$("#meMsg").textContent="✗ Write a few words about yourself before publishing.";return;}
   post("/api/publish",{
     username:u,displayName:$("#displayName").value.trim(),tagline:$("#tagline").value.trim(),
     avatar:avatarData,socials:socials(),games:games(),
@@ -278,6 +307,7 @@ $("#pubBtn").onclick=function(){
 $("#teamBtn").onclick=function(){
   var s=slug($("#t_slug").value||$("#t_name").value);
   if(!s){$("#teamMsg").className="msg err show";$("#teamMsg").textContent="✗ Enter a team name.";return;}
+  var tbody=$("#t_md").value.trim(); if(tbody.length<10){$("#teamMsg").className="msg err show";$("#teamMsg").textContent="✗ Write a few words about your team before publishing.";return;}
   post("/api/group",{
     name:$("#t_name").value.trim(),slug:s,event:$("#t_event").value.trim(),
     game:$("#t_game").value.trim(),tagline:$("#t_tagline").value.trim(),

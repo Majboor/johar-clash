@@ -5,12 +5,20 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Players — Find a teammate · Johar Clash</title>
 <meta name="description" content="Browse registered Johar Clash players, filter by game, and find teammates looking for a squad.">
+<link rel="canonical" href="https://majboor.github.io/johar-clash/players.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Johar Clash">
+<meta property="og:title" content="Players — Find a teammate · Johar Clash">
+<meta property="og:description" content="Browse registered Johar Clash players, filter by game, and find teammates looking for a squad.">
+<meta property="og:url" content="https://majboor.github.io/johar-clash/players.html">
+<meta property="og:image" content="assets/key-venue.jpg">
+<meta name="twitter:card" content="summary_large_image">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
-:root{--paper:#F1EDE1;--bone:#E7E1D2;--ink:#141414;--red:#E8442A;--blue:#1E46C8;--mute:#6d6a60;--hair:#cfc8b6}
+:root{--paper:#F1EDE1;--bone:#E7E1D2;--ink:#141414;--red:#E8442A;--red-txt:#C6351D;--blue:#1E46C8;--mute:#57544a;--hair:#cfc8b6}
 body{background:var(--paper);color:var(--ink);font:16px/1.55 'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif}
 a{color:inherit}.mono{font-family:'DM Mono',ui-monospace,monospace}
 .wrap{max-width:1180px;margin:0 auto;padding:0 24px}
@@ -21,7 +29,7 @@ a{color:inherit}.mono{font-family:'DM Mono',ui-monospace,monospace}
 .navlinks a{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.07em;text-decoration:none;border:1px solid var(--ink);padding:9px 11px}
 .navlinks a:hover,.navlinks a.on{background:var(--ink);color:var(--paper)}
 header.head{padding:44px 0 22px;border-bottom:1px solid var(--ink)}
-.kick{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--red)}
+.kick{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.14em;color:var(--red-txt)}
 h1{font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-.04em;line-height:.95;margin:8px 0}
 .lead{color:#333;max-width:60ch}
 .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:20px 0;border-bottom:1px solid var(--ink)}
@@ -35,7 +43,7 @@ h1{font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-.04em;line-hei
 .card .top{display:flex;gap:13px;padding:16px;border-bottom:1px solid var(--hair);align-items:center}
 .av{width:56px;height:56px;border:1px solid var(--ink);object-fit:cover;background:var(--bone);flex:0 0 auto;display:flex;align-items:center;justify-content:center;font:800 22px/1 'Inter';color:var(--mute)}
 .nm{font-weight:800;letter-spacing:-.02em;line-height:1.05}
-.un{font:500 10px/1.4 'DM Mono',monospace;color:var(--red);text-transform:uppercase}
+.un{font:500 10px/1.4 'DM Mono',monospace;color:var(--red-txt);text-transform:uppercase}
 .tag{font:500 9px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;background:var(--ink);color:var(--paper);padding:6px 8px;margin:0 6px 6px 0;display:inline-block}
 .tag.open{background:var(--blue)}
 .card .tl{padding:14px 16px;font-size:13.5px;color:#333;flex:1}
@@ -76,7 +84,7 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 <script>
 var GAMES=["FIFA","Tekken 5","Valorant","Call of Duty","Mortal Kombat","PUBG Mobile"];
 var $=function(s){return document.querySelector(s)};
-var data=[], gameF={}, openF=false, q="";
+var data=[], gameF={}, openF=false, q="", t;
 function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 
 // game filter chips
@@ -86,16 +94,23 @@ GAMES.forEach(function(g){
   $("#filters").insertBefore(c,$("#count"));
 });
 $("[data-f=open]").onclick=function(){openF=!openF;this.classList.toggle("on");render()};
-$("#q").oninput=function(){q=this.value.toLowerCase();render()};
+$("#q").oninput=function(){var v=this.value.toLowerCase();clearTimeout(t);t=setTimeout(function(){q=v;render()},120);};
+
+// reset / clear-filters chip
+var reset=document.createElement("span");reset.className="chip";reset.id="reset";reset.textContent="Reset filters";
+reset.style.borderColor="var(--red)";reset.style.display="none";
+reset.onclick=function(){q="";$("#q").value="";openF=false;gameF={};document.querySelectorAll("#filters .chip.on").forEach(function(c){c.classList.remove("on")});render();};
+$("#filters").insertBefore(reset,$("#count"));
 
 function card(p){
-  var av=p.avatar?'<img class="av" src="'+esc(p.avatar)+'" alt="">':'<div class="av">'+esc((p.displayName||p.username||"?")[0].toUpperCase())+'</div>';
+  var L=esc((p.displayName||p.username||"?")[0].toUpperCase()).replace(/'/g,"&#39;");
+  var av=p.avatar?'<img class="av" src="'+esc(p.avatar)+'" alt="" loading="lazy" decoding="async" width="56" height="56" onerror="this.outerHTML=\'<div class=&quot;av&quot;>'+L+'</div>\'">':'<div class="av">'+L+'</div>';
   var tags="";
   if(p.lookingForTeam)tags+='<span class="tag open">Looking for a team</span>';
   (p.games||[]).slice(0,4).forEach(function(g){tags+='<span class="tag">'+esc(g)+'</span>'});
   return '<a class="card" href="u/'+esc(p.username)+'/">'+
     '<div class="top">'+av+'<div><div class="nm">'+esc(p.displayName||p.username)+'</div><div class="un">@'+esc(p.username)+'</div></div></div>'+
-    (p.tagline?'<div class="tl">'+esc(p.tagline)+'</div>':'<div class="tl" style="color:#aaa">—</div>')+
+    (p.tagline?'<div class="tl">'+esc(p.tagline)+'</div>':'<div class="tl" style="color:var(--mute)">—</div>')+
     (tags?'<div class="tags">'+tags+'</div>':'')+'</a>';
 }
 function render(){
@@ -106,13 +121,20 @@ function render(){
     if(q&&!((p.displayName||"")+" "+(p.username||"")).toLowerCase().includes(q))return false;
     return true;
   });
+  $("#reset").style.display=(q||openF||GAMES.some(function(g){return gameF[g]}))?"":"none";
   $("#count").textContent=list.length+" / "+data.length+" players";
   $("#grid").innerHTML=list.length?list.map(card).join(""):
-    '<div class="empty">No players match yet. <a href="portal.html">Build the first page ↗</a></div>';
+    (data.length>0?'<div class="empty">No players match these filters.</div>':
+    '<div class="empty">No players yet. <a href="portal.html">Build the first page ↗</a></div>');
 }
-fetch("data/directory.json?c="+Date.now()).then(function(r){return r.ok?r.json():[]}).then(function(d){
+$('#grid').innerHTML='<div class="empty mono" style="letter-spacing:.08em">Loading players…</div>';
+$('#count').textContent='LOADING';
+fetch("data/directory.json").then(function(r){if(!r.ok)throw new Error(r.status);return r.json()}).then(function(d){
   data=(d||[]).sort(function(a,b){return (b.updated||"").localeCompare(a.updated||"")});render();
-}).catch(function(){data=[];render();});
+}).catch(function(){
+  $("#count").textContent="";
+  $("#grid").innerHTML='<div class="empty">Couldn\'t load the player directory right now. <a href="#" onclick="location.reload();return false" style="color:var(--red)">Retry ↗</a></div>';
+});
 </script>
 </body>
 </html>

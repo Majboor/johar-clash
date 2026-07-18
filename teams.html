@@ -27,11 +27,13 @@ h1{font-size:clamp(30px,5vw,54px);font-weight:800;letter-spacing:-.04em;line-hei
 .filters{display:flex;gap:8px;flex-wrap:wrap;align-items:center;padding:20px 0;border-bottom:1px solid var(--ink)}
 .filters input{background:#fff;border:1px solid var(--ink);padding:11px 13px;font:14px 'Inter';min-width:220px}
 .chip{font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--ink);padding:9px 12px;cursor:pointer;background:#fff}
-.chip.on{background:var(--blue);border-color:var(--blue);color:#fff}
+.chip.on{background:var(--blue);border-color:var(--blue);color:var(--paper)}
 .count{margin-left:auto;font:500 11px/1 'DM Mono',monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.08em}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:16px;padding:26px 0 90px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:16px;padding:26px 0 90px}
 .card{border:1px solid var(--ink);background:#fff;text-decoration:none;display:block;padding:20px;transition:.15s}
 .card:hover{transform:translateY(-3px);box-shadow:6px 6px 0 var(--ink)}
+.thead{display:flex;gap:13px;align-items:center}
+.tav{width:44px;height:44px;border:1px solid var(--ink);background:var(--bone);display:flex;align-items:center;justify-content:center;font:800 18px/1 'Inter';color:var(--mute);flex:0 0 auto}
 .nm{font-size:24px;font-weight:800;letter-spacing:-.03em;line-height:1}
 .ev{font:500 10px/1.4 'DM Mono',monospace;color:var(--red);text-transform:uppercase;margin-top:6px}
 .tl{font-size:13.5px;color:#333;margin:12px 0}
@@ -72,8 +74,10 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 <script>
 var $=function(s){return document.querySelector(s)};
 var data=[], openOnly=false, q="";
+var GAMES=["FIFA","Tekken 5","Valorant","Call of Duty","Mortal Kombat","PUBG Mobile"], gameF={};
 function esc(s){return (s||"").replace(/[&<>"]/g,function(c){return{"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})}
 $("#openChip").onclick=function(){openOnly=!openOnly;this.classList.toggle("on");render()};
+(function(){var cnt=$("#count");GAMES.forEach(function(g){var c=document.createElement("span");c.className="chip";c.textContent=g;c.onclick=function(){gameF[g]=!gameF[g];this.classList.toggle("on");render()};cnt.parentNode.insertBefore(c,cnt)})})();
 $("#q").oninput=function(){q=this.value.toLowerCase();render()};
 function card(t){
   var tags="";
@@ -81,15 +85,19 @@ function card(t){
   if(t.game)tags+='<span class="tag">'+esc(t.game)+'</span>';
   if(t.openSlots>0)tags+='<span class="tag open">'+t.openSlots+' open slot'+(t.openSlots>1?'s':'')+'</span>';
   return '<a class="card" href="g/'+esc(t.slug)+'/">'+
+    '<div class="thead"><div class="tav">'+esc((t.name||'?')[0].toUpperCase())+'</div><div>'+
     '<div class="nm">'+esc(t.name)+'</div>'+
     (t.event?'<div class="ev">'+esc(t.event)+'</div>':'')+
+    '</div></div>'+
     (t.tagline?'<div class="tl">'+esc(t.tagline)+'</div>':'<div class="tl" style="color:#aaa">—</div>')+
     '<div>'+tags+'</div>'+
     ((t.members&&t.members.length)?'<div class="tl mono" style="font-size:11px;color:var(--mute)">'+t.members.length+' member'+(t.members.length>1?'s':'')+'</div>':'')+
     '</a>';
 }
 function render(){
+  var af=GAMES.filter(function(g){return gameF[g]});
   var list=data.filter(function(t){
+    if(af.length&&af.indexOf(t.game)<0)return false;
     if(openOnly&&!(t.openSlots>0))return false;
     if(q&&!((t.name||"")+" "+(t.game||"")+" "+(t.event||"")).toLowerCase().includes(q))return false;
     return true;
