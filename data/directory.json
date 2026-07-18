@@ -1,1 +1,14 @@
-[]
+[
+  {
+    "username": "admin-e2e",
+    "displayName": "Admin E2E",
+    "tagline": "testing admin approve flow",
+    "avatar": "",
+    "games": [
+      "FIFA"
+    ],
+    "lookingForTeam": true,
+    "socials": {},
+    "updated": "2026-07-18T23:24:39.155240+00:00"
+  }
+]
