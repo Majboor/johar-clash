@@ -4,10 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Build your page — Johar Clash Portal</title>
-<meta name="description" content="Registered for Johar Clash? Build your own player page with a markdown editor, find teammates, and create your team.">
+<meta name="description" content="Registered for Johar Clash? Fill in your details, then design your own page with a visual editor — no code. Find teammates and create your team.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -32,80 +31,105 @@ h1{font-size:clamp(30px,5vw,52px);font-weight:800;letter-spacing:-.04em;line-hei
 .tabbar button{font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;background:none;border:0;border-bottom:3px solid transparent;padding:14px 18px;cursor:pointer;color:var(--mute)}
 .tabbar button.on{color:var(--ink);border-bottom-color:var(--red)}
 .panel{display:none;padding:28px 0 90px}.panel.on{display:block}
-.grid{display:grid;grid-template-columns:1fr 1fr;gap:34px}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
-@media(max-width:560px){.topbar .wrap{height:auto;min-height:56px;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}.navlinks{width:100%}}
-@media(max-width:560px){.row2{grid-template-columns:1fr}}
+/* wizard */
+.steps{display:flex;gap:10px;align-items:center;margin-bottom:26px;flex-wrap:wrap}
+.stepdot{display:flex;align-items:center;gap:10px;font:600 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+.stepdot .n{width:26px;height:26px;border:1px solid var(--ink);display:flex;align-items:center;justify-content:center;background:#fff}
+.stepdot.on{color:var(--ink)}.stepdot.on .n{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.stepdot.done .n{background:var(--blue);color:#fff;border-color:var(--blue)}
+.steps .sep{flex:1;min-width:20px;height:1px;background:var(--hair)}
+.stepwrap{display:none}.stepwrap.on{display:block}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+@media(max-width:820px){.grid2{grid-template-columns:1fr}}
 label{display:block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;color:var(--mute);margin:16px 0 7px}
-input[type=text],input[type=email],textarea,select{width:100%;background:#fff;border:1px solid var(--ink);padding:12px 13px;font:15px/1.5 'Inter',sans-serif;color:var(--ink)}
-input[type=text]:focus,input[type=email]:focus,textarea:focus,select:focus{outline:2px solid var(--blue);outline-offset:0}
-textarea{resize:vertical;min-height:120px}
-textarea.editor{min-height:340px;font-family:'DM Mono',monospace;font-size:13.5px;line-height:1.6}
+input[type=text],input[type=email],select{width:100%;background:#fff;border:1px solid var(--ink);padding:12px 13px;font:15px/1.5 'Inter',sans-serif;color:var(--ink)}
+input:focus,select:focus,.rte:focus{outline:2px solid var(--blue);outline-offset:1px}
 .row2{display:grid;grid-template-columns:1fr 1fr;gap:14px}
 .hint{font-size:12px;color:var(--mute);margin-top:5px}
 .avatarrow{display:flex;gap:16px;align-items:center;margin-top:8px}
 .avprev{width:92px;height:92px;border:1px solid var(--ink);object-fit:cover;background:var(--bone);display:flex;align-items:center;justify-content:center;font:800 34px/1 'Inter';color:var(--mute)}
-.chip{display:inline-block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--ink);padding:9px 12px;margin:0 8px 8px 0;cursor:pointer;user-select:none;background:#fff;appearance:none;-webkit-appearance:none;text-align:inherit}
+.chip{display:inline-block;font:500 11px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.05em;border:1px solid var(--ink);padding:9px 12px;margin:0 8px 8px 0;cursor:pointer;user-select:none;background:#fff}
 .chip.on{background:var(--ink);color:var(--paper)}
-.chip:focus-visible,.toggle:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.chip:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
 .toggle{display:flex;align-items:center;gap:12px;margin-top:14px;cursor:pointer}
 .toggle .sw{width:44px;height:24px;border:1px solid var(--ink);background:#fff;position:relative;flex:0 0 auto}
 .toggle .sw::after{content:"";position:absolute;top:2px;left:2px;width:18px;height:18px;background:var(--ink);transition:.15s}
 .toggle.on .sw{background:var(--blue);border-color:var(--blue)}.toggle.on .sw::after{left:22px;background:#fff}
-.btn{font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--paper);border:1px solid var(--ink);padding:15px 22px;cursor:pointer;margin-top:24px}
+.toggle:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
+.sectlabel{font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin:26px 0 4px}
+.sectlabel:first-child{margin-top:0}
+/* buttons */
+.btn{font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.08em;background:var(--ink);color:var(--paper);border:1px solid var(--ink);padding:15px 22px;cursor:pointer}
 .btn:hover{background:var(--red);border-color:var(--red)}
 .btn[disabled]{opacity:.5;cursor:not-allowed}
 .btn.ghost{background:none;color:var(--ink)}.btn.ghost:hover{background:var(--ink);color:var(--paper)}
-.preview{border:1px solid var(--ink);background:#fff;padding:22px 24px;min-height:340px;overflow:auto}
-.preview h1,.preview h2,.preview h3{letter-spacing:-.03em;margin:1.4em 0 .5em;line-height:1.1}
-.preview h1{font-size:32px}.preview h2{font-size:25px}.preview h3{font-size:20px}
-.preview p{margin:0 0 .8em}.preview ul,.preview ol{margin:0 0 .8em 1.3em}
-.preview a{color:var(--blue);text-decoration:underline}.preview img{max-width:100%}
-.preview blockquote{border-left:3px solid var(--red);padding-left:16px;color:var(--mute);margin:0 0 .8em}
-.preview pre{background:var(--ink);color:#f2f2f2;padding:16px;overflow:auto;font-size:13px}
-.preview code{font-family:'DM Mono',monospace}
-.preview table{border-collapse:collapse;width:100%;margin:0 0 .8em}
-.preview th,.preview td{border:1px solid var(--hair);padding:8px 10px;text-align:left}
-.pcard{border:1px solid var(--ink);padding:18px 20px;background:var(--bone);position:sticky;top:78px}
+.navrow{display:flex;gap:12px;align-items:center;margin-top:26px;flex-wrap:wrap}
+.navrow .sp{flex:1}
+.buildfor{font:500 12px/1.5 'DM Mono',monospace;color:var(--mute);text-transform:uppercase;letter-spacing:.05em;margin-bottom:14px}
+.buildfor b{color:var(--ink)}
+/* visual editor */
+.editorlabel{display:flex;justify-content:space-between;align-items:baseline;flex-wrap:wrap;gap:8px}
+.toolbar{display:flex;flex-wrap:wrap;gap:4px;border:1px solid var(--ink);border-bottom:0;background:var(--bone);padding:8px}
+.tbtn{font:600 12px/1 'Inter';min-width:34px;height:34px;padding:0 9px;border:1px solid transparent;background:#fff;cursor:pointer;color:var(--ink);display:inline-flex;align-items:center;gap:5px}
+.tbtn:hover{border-color:var(--ink)}
+.tbtn .mono{font:600 10px/1 'DM Mono',monospace;text-transform:uppercase}
+.tbtn.img{background:var(--ink);color:var(--paper)}.tbtn.img:hover{background:var(--red)}
+.tsep{width:1px;background:var(--hair);margin:2px 4px}
+.rte{border:1px solid var(--ink);background:#fff;padding:20px 22px;min-height:320px;overflow-y:auto;font:16px/1.6 'Inter',sans-serif;color:var(--ink)}
+.rte:empty:before{content:attr(data-ph);color:var(--mute)}
+.rte:focus{outline:2px solid var(--blue);outline-offset:-1px}
+.rte h2{font-size:25px;font-weight:800;letter-spacing:-.03em;margin:1.1em 0 .4em;line-height:1.15}
+.rte h3{font-size:20px;font-weight:700;letter-spacing:-.02em;margin:1em 0 .4em}
+.rte p{margin:0 0 .8em}
+.rte ul,.rte ol{margin:0 0 .8em 1.4em}.rte li{margin:.25em 0}
+.rte a{color:var(--blue);text-decoration:underline}
+.rte img{max-width:100%;height:auto;border:1px solid var(--hair);margin:.4em 0;display:block}
+.rte blockquote{border-left:3px solid var(--red);padding-left:14px;color:var(--mute);margin:0 0 .8em}
 .msg{margin-top:18px;padding:14px 16px;border:1px solid var(--ink);font-size:14px;display:none}
 .msg.show{display:block}.msg.ok{background:#e7f0e5;border-color:#3a7d44}.msg.err{background:#f6e2df;border-color:var(--red)}
 .msg a{color:var(--blue);font-weight:600}
-.sectlabel{font:600 12px/1 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.1em;color:var(--red);margin:26px 0 4px}
 footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--mute)}
+@media(max-width:560px){.topbar .wrap{height:auto;flex-wrap:wrap;padding-top:8px;padding-bottom:8px}.row2{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<nav class="topbar" aria-label="Primary"><div class="wrap">
+<div class="topbar"><div class="wrap">
 <a class="brand" href="./">JOHAR<b>/</b>CLASH</a>
-<div class="navlinks">
+<nav class="navlinks" aria-label="Primary">
 <a href="portal.html" class="on">Portal</a>
 <a href="players.html">Players</a>
 <a href="teams.html">Teams</a>
 <a href="./#register">Register</a>
-</div>
-</div></nav>
+</nav>
+</div></div>
 
 <header class="head"><div class="wrap">
-<div class="kick">Player portal · build & publish</div>
+<div class="kick">Player portal</div>
 <h1>Build your player page.</h1>
-<p class="lead">Registered for Johar Clash? Design your own page with a live markdown editor, set your profile, <a href="players.html" style="color:var(--blue);font-weight:600">find a squad</a>, or start a team. Hit publish and it goes live on the site after a quick review.</p>
-<div class="gate" id="gate">
-<b>Heads up —</b> the portal is for registered players. <a href="./#register" style="color:var(--blue);font-weight:600">Register first ↗</a>, then come back — your details will be waiting here.
-</div>
+<p class="lead">Fill in your details, then design your page with the visual editor — style text, add photos, no code. Hit publish and it goes live after a quick review.</p>
+<div class="gate" id="gate"></div>
 </div></header>
 
 <div class="wrap">
-<main>
 <div class="tabbar" role="tablist">
-<button id="tab-me" data-tab="me" class="on" role="tab" aria-selected="true" aria-controls="panel-me">① My player page</button>
-<button id="tab-team" data-tab="team" role="tab" aria-selected="false" aria-controls="panel-team">② Create a team</button>
+<button data-tab="me" id="tab-me" class="on" role="tab" aria-selected="true">① My player page</button>
+<button data-tab="team" id="tab-team" role="tab" aria-selected="false">② Create a team</button>
+</div>
+<main>
+
+<!-- ================= PLAYER ================= -->
+<section class="panel on" id="panel-me" role="tabpanel" aria-labelledby="tab-me">
+<div class="steps" data-steps="me">
+<div class="stepdot on" data-dot="1"><span class="n">1</span> Your details</div>
+<span class="sep"></span>
+<div class="stepdot" data-dot="2"><span class="n">2</span> Your page</div>
 </div>
 
-<!-- ============ PLAYER PANEL ============ -->
-<section class="panel on" id="panel-me" role="tabpanel" aria-labelledby="tab-me">
-<div class="grid">
+<!-- step 1: details -->
+<div class="stepwrap on" data-step="me-1">
+<div class="grid2">
 <div>
-<div class="sectlabel">Profile — locked header (not markdown)</div>
+<div class="sectlabel">Profile photo &amp; identity</div>
 <div class="avatarrow">
 <div class="avprev" id="avPrev">P</div>
 <div>
@@ -120,6 +144,8 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 </div>
 <label for="tagline">One-line description</label>
 <input type="text" id="tagline" placeholder="FIFA main · looking for a Valorant squad" maxlength="120">
+</div>
+<div>
 <div class="sectlabel">Socials</div>
 <div class="row2">
 <div><label for="s_instagram">Instagram</label><input type="text" id="s_instagram" placeholder="username"></div>
@@ -137,25 +163,42 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 <div id="games"></div>
 <div class="toggle" id="lft" role="switch" tabindex="0" aria-checked="false"><div class="sw"></div><span class="mono" style="font-size:12px;text-transform:uppercase;letter-spacing:.06em">Looking for a team</span></div>
 </div>
+</div>
+<div class="navrow">
+<span class="sp"></span>
+<button class="btn" data-next="me">Next: build your page →</button>
+</div>
+<div class="msg" id="meErr1"></div>
+</div>
 
-<div>
-<div class="sectlabel">Your page — write in markdown</div>
-<label for="md">Markdown editor</label>
-<textarea class="editor" id="md" placeholder="## About me&#10;Tell people how you play, your best games, your schedule…&#10;&#10;- Main: FIFA&#10;- Also: Valorant, Tekken 5&#10;&#10;> Add me on Discord to scrim."></textarea>
-<div class="hint">Supports headings, **bold**, lists, links, images, quotes, tables. Your locked profile header (photo, name, tagline, socials) is added automatically — you don't write it here.</div>
-<label>Live preview</label>
-<div class="preview" id="prev"></div>
-</div>
-</div>
+<!-- step 2: page -->
+<div class="stepwrap" data-step="me-2">
+<div class="buildfor" id="meBuildFor"></div>
+<div class="editorlabel"><label style="margin:0 0 9px" for="editor">Your page</label><span class="hint" style="margin:0">Select text, then use the toolbar. Add photos with <b>Photo</b>.</span></div>
+<div class="toolbar" data-bar="me"></div>
+<div class="rte" id="editor" contenteditable="true" data-ph="Write about how you play, your best games, your schedule… then style it with the toolbar above."></div>
+<input type="file" id="editorImg" accept="image/*" style="display:none">
+<div class="navrow">
+<button class="btn ghost" data-back="me">← Back to details</button>
+<span class="sp"></span>
 <button class="btn" id="pubBtn">Publish my page →</button>
+</div>
 <div class="msg" id="meMsg"></div>
+</div>
 </section>
 
-<!-- ============ TEAM PANEL ============ -->
+<!-- ================= TEAM ================= -->
 <section class="panel" id="panel-team" role="tabpanel" aria-labelledby="tab-team">
-<div class="grid">
+<div class="steps" data-steps="team">
+<div class="stepdot on" data-dot="1"><span class="n">1</span> Team details</div>
+<span class="sep"></span>
+<div class="stepdot" data-dot="2"><span class="n">2</span> Team page</div>
+</div>
+
+<div class="stepwrap on" data-step="team-1">
+<div class="grid2">
 <div>
-<div class="sectlabel">Team — locked header</div>
+<div class="sectlabel">Team identity</div>
 <div class="row2">
 <div><label for="t_name">Team name</label><input type="text" id="t_name" placeholder="e.g. Johar Raptors" maxlength="48"></div>
 <div><label for="t_slug">Slug (URL)</label><input type="text" id="t_slug" placeholder="johar-raptors" maxlength="32"><div class="hint mono" id="turlhint">/g/…</div></div>
@@ -166,58 +209,62 @@ footer{border-top:1px solid var(--ink);padding:24px 0;font:500 11px/1.6 'DM Mono
 </div>
 <label for="t_tagline">One-line description</label>
 <input type="text" id="t_tagline" placeholder="Comp Valorant squad · 2 slots open" maxlength="120">
-<div class="row2">
-<div><label for="t_slots">Open slots</label><input type="text" id="t_slots" placeholder="2" inputmode="numeric"></div>
-<div><label for="t_members">Members (comma-separated usernames)</label><input type="text" id="t_members" placeholder="shadow, ace, rizz"></div>
-</div>
 </div>
 <div>
-<div class="sectlabel">Team page — markdown</div>
-<label for="t_md">Markdown editor</label>
-<textarea class="editor" id="t_md" placeholder="## About the team&#10;Roster, playstyle, tryout details, practice times…"></textarea>
-<label>Live preview</label>
-<div class="preview" id="t_prev"></div>
+<div class="sectlabel">Roster</div>
+<div class="row2">
+<div><label for="t_slots">Open slots</label><input type="text" id="t_slots" placeholder="2" inputmode="numeric"></div>
+<div><label for="t_members">Members (comma-separated)</label><input type="text" id="t_members" placeholder="shadow, ace, rizz"></div>
 </div>
 </div>
+</div>
+<div class="navrow"><span class="sp"></span><button class="btn" data-next="team">Next: build your page →</button></div>
+<div class="msg" id="teamErr1"></div>
+</div>
+
+<div class="stepwrap" data-step="team-2">
+<div class="buildfor" id="teamBuildFor"></div>
+<div class="editorlabel"><label style="margin:0 0 9px" for="t_editor">Team page</label><span class="hint" style="margin:0">Select text, then use the toolbar. Add photos with <b>Photo</b>.</span></div>
+<div class="toolbar" data-bar="team"></div>
+<div class="rte" id="t_editor" contenteditable="true" data-ph="Roster, playstyle, tryout details, practice times… then style it with the toolbar above."></div>
+<input type="file" id="t_editorImg" accept="image/*" style="display:none">
+<div class="navrow">
+<button class="btn ghost" data-back="team">← Back to details</button>
+<span class="sp"></span>
 <button class="btn" id="teamBtn">Create team page →</button>
+</div>
 <div class="msg" id="teamMsg"></div>
+</div>
 </section>
 </main>
 </div>
 
 <footer><div class="wrap">Johar Clash · Lahore LAN Tournament · pages are reviewed before they go live</div></footer>
 
-<script defer src="https://cdn.jsdelivr.net/npm/marked@12.0.2/marked.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/dompurify@3.1.6/dist/purify.min.js"></script>
 <script>
-// suppress bare-URL autolinking so preview matches python-markdown publish output (#20)
-document.addEventListener("DOMContentLoaded",function(){try{marked.use({tokenizer:{url:function(){return undefined;}}});}catch(e){}});
 var API="https://johar-api.waleeds.world";
 var GAMES=["FIFA","Tekken 5","Valorant","Call of Duty","Mortal Kombat","PUBG Mobile"];
 var $=function(s){return document.querySelector(s)};
+var $$=function(s){return Array.prototype.slice.call(document.querySelectorAll(s))};
 function slug(s){return (s||"").toLowerCase().trim().replace(/[\s_]+/g,"-").replace(/[^a-z0-9-]/g,"").replace(/-+/g,"-").replace(/^-|-$/g,"").slice(0,32)}
-function mdHtml(t){try{return DOMPurify.sanitize(marked.parse(t||"",{breaks:true,gfm:true}),{ALLOWED_TAGS:["h1","h2","h3","h4","h5","h6","p","br","hr","blockquote","ul","ol","li","strong","em","b","i","code","pre","a","img","table","thead","tbody","tr","th","td","del","span","div"],ALLOWED_ATTR:["href","title","target","rel","src","alt","class","align"],ALLOWED_URI_REGEXP:/^(?:(?:https?|mailto):|[^a-z]|[a-z+.\-]+(?:[^a-z+.\-:]|$))/i})}catch(e){return""}}
 
 // ---- registration gate + prefill (+ UTM invite bypass) ----
 (function(){
-  // An invite link carrying a utm parameter (e.g. ?utm_source=invite) always
-  // unlocks the portal — the username field is available with no registration.
   var params=new URLSearchParams(location.search);
   var hasUtm=false; params.forEach(function(v,k){ if(k.toLowerCase().indexOf("utm_")===0) hasUtm=true; });
   if(hasUtm){ try{localStorage.setItem("jc_invited","1");}catch(e){} }
   var invited = hasUtm || localStorage.getItem("jc_invited")==="1";
-
   var reg=null; try{reg=JSON.parse(localStorage.getItem("jc_reg")||"null")}catch(e){}
   if(reg){
     if(reg.name){$("#displayName").value=reg.name;$("#username").value=slug(reg.name);}
     if(reg.team){var ts=slug(reg.team);$("#t_name").value=reg.team;$("#t_slug").value=ts;$("#turlhint").textContent="/g/"+(ts||"…")+"/";}
-    var nm=(reg.name?", "+reg.name:"");
-    $("#gate").innerHTML="<b style=\"color:var(--blue)\">Welcome back"+nm+".</b> We've prefilled your profile from your registration — edit anything below. Your username becomes your public /u/… page URL.";
+    $("#gate").innerHTML="<b style=\"color:var(--blue)\">Welcome back"+(reg.name?", "+reg.name:"")+".</b> We've prefilled your details from your registration — edit anything, then build your page.";
     $("#gate").classList.add("show");
   } else if(invited){
     $("#gate").innerHTML="<b style=\"color:var(--blue)\">Invite access.</b> You're in — pick any username below (that becomes your public /u/… page URL) and build your page. No registration needed.";
     $("#gate").classList.add("show");
   } else {
+    $("#gate").innerHTML="<b>Heads up —</b> the portal is for registered players. <a href=\"./#register\" style=\"color:var(--blue);font-weight:600\">Register first ↗</a>, then come back — your details will be waiting here.";
     $("#gate").classList.add("show");
   }
   syncUrl();
@@ -225,31 +272,49 @@ function mdHtml(t){try{return DOMPurify.sanitize(marked.parse(t||"",{breaks:true
 
 // ---- tabs ----
 function activateTab(n){
-  document.querySelectorAll(".tabbar button").forEach(function(x){x.classList.remove("on");x.setAttribute("aria-selected","false")});
-  document.querySelectorAll(".panel").forEach(function(x){x.classList.remove("on")});
-  var b=$("#tab-"+n); if(b){b.classList.add("on");b.setAttribute("aria-selected","true");}
-  var p=$("#panel-"+n); if(p)p.classList.add("on");
+  $$(".tabbar button").forEach(function(b){var on=b.getAttribute("data-tab")===n;b.classList.toggle("on",on);b.setAttribute("aria-selected",String(on));});
+  $$(".panel").forEach(function(p){p.classList.toggle("on",p.id==="panel-"+n);});
 }
-document.querySelectorAll(".tabbar button").forEach(function(b){
-  b.onclick=function(){ activateTab(b.dataset.tab); location.hash=b.dataset.tab; };
-});
-if(location.hash==="#team")activateTab("team");
+$$(".tabbar button").forEach(function(b){b.onclick=function(){activateTab(b.getAttribute("data-tab"));};});
+
+// ---- wizard steps ----
+function goStep(tab,n){
+  $$('[data-step^="'+tab+'-"]').forEach(function(w){w.classList.toggle("on",w.getAttribute("data-step")===tab+"-"+n);});
+  $$('[data-steps="'+tab+'"] .stepdot').forEach(function(d){
+    var dn=+d.getAttribute("data-dot");
+    d.classList.toggle("on",dn===n);d.classList.toggle("done",dn<n);
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+$$("[data-next]").forEach(function(b){b.onclick=function(){
+  var tab=b.getAttribute("data-next");
+  if(tab==="me"){
+    var u=slug($("#username").value||$("#displayName").value);
+    if(!u){return err("#meErr1","Enter a display name or username to continue.");}
+    $("#meBuildFor").innerHTML="Building the page for <b>@"+u+"</b> — <span style='color:var(--blue)'>/u/"+u+"/</span>";
+  }else{
+    var s=slug($("#t_slug").value||$("#t_name").value);
+    if(!s){return err("#teamErr1","Enter a team name to continue.");}
+    $("#teamBuildFor").innerHTML="Building the page for <b>"+($("#t_name").value.trim()||s)+"</b> — <span style='color:var(--blue)'>/g/"+s+"/</span>";
+  }
+  hide("#"+(tab==="me"?"meErr1":"teamErr1"));
+  goStep(tab,2);
+};});
+$$("[data-back]").forEach(function(b){b.onclick=function(){goStep(b.getAttribute("data-back"),1);};});
+function err(sel,t){var m=$(sel);m.className="msg err show";m.textContent="✗ "+t;}
+function hide(sel){$(sel).className="msg";}
 
 // ---- games chips ----
 var gamesSel={};
 try{var _rg=JSON.parse(localStorage.getItem("jc_reg")||"null");if(_rg&&_rg.games)_rg.games.forEach(function(g){if(GAMES.indexOf(g)>=0)gamesSel[g]=true;});}catch(e){}
 GAMES.forEach(function(g){
-  var c=document.createElement("button");c.type="button";c.className="chip"+(gamesSel[g]?" on":"");c.textContent=g;
-  c.setAttribute("aria-pressed",String(!!gamesSel[g]));
-  c.onclick=function(){gamesSel[g]=!gamesSel[g];c.setAttribute("aria-pressed",String(c.classList.toggle("on")))};
+  var c=document.createElement("button");c.type="button";c.className="chip"+(gamesSel[g]?" on":"");c.textContent=g;c.setAttribute("aria-pressed",String(!!gamesSel[g]));
+  c.onclick=function(){gamesSel[g]=!gamesSel[g];c.setAttribute("aria-pressed",String(c.classList.toggle("on")));};
   $("#games").appendChild(c);
 });
 function toggleLft(){$("#lft").setAttribute("aria-checked",String($("#lft").classList.toggle("on")));}
-$("#lft").onclick=toggleLft;
-$("#lft").onkeydown=function(e){
-  if(e.key==="Enter"){toggleLft();}
-  else if(e.key===" "||e.key==="Spacebar"){e.preventDefault();toggleLft();}
-};
+$("#lft").addEventListener("click",toggleLft);
+$("#lft").addEventListener("keydown",function(e){if(e.key===" "||e.key==="Enter"){e.preventDefault();toggleLft();}});
 
 // ---- avatar ----
 var avatarData=null;
@@ -257,74 +322,115 @@ $("#avFile").onchange=function(e){
   var f=e.target.files[0]; if(!f)return;
   if(f.size>2500000){alert("Image too large (max 2.5MB)");return;}
   var r=new FileReader();
-  r.onload=function(){avatarData=r.result;var p=$("#avPrev");p.innerHTML="";p.style.backgroundImage="url("+r.result+")";p.style.backgroundSize="cover";p.style.backgroundPosition="center";};
+  r.onload=function(){avatarData=r.result;var p=$("#avPrev");p.textContent="";p.style.backgroundImage="url("+r.result+")";p.style.backgroundSize="cover";p.style.backgroundPosition="center";};
   r.readAsDataURL(f);
 };
 
-// ---- live preview + url hints ----
-function syncUrl(){
-  var u=slug($("#username").value||$("#displayName").value);
-  $("#urlhint").textContent="/u/"+(u||"…")+"/";
-  $("#avPrev").firstChild&&($("#avPrev").textContent=(($("#displayName").value||"P")[0]||"P").toUpperCase());
-}
-$("#md").addEventListener("input",function(){$("#prev").innerHTML=mdHtml(this.value)});
+// ---- url hints ----
+function syncUrl(){var u=slug($("#username").value||$("#displayName").value);$("#urlhint").textContent="/u/"+(u||"…")+"/";var d=($("#displayName").value||"P").trim();$("#avPrev").firstChild||( $("#avPrev").style.backgroundImage||( $("#avPrev").textContent=(d[0]||"P").toUpperCase()));}
 $("#displayName").addEventListener("input",syncUrl);
 $("#username").addEventListener("input",syncUrl);
-$("#t_md").addEventListener("input",function(){$("#t_prev").innerHTML=mdHtml(this.value)});
 $("#t_name").addEventListener("input",function(){$("#turlhint").textContent="/g/"+(slug($("#t_slug").value||this.value)||"…")+"/"});
 $("#t_slug").addEventListener("input",function(){$("#turlhint").textContent="/g/"+(slug(this.value)||"…")+"/"});
 
-function socials(){
-  var o={};["instagram","linkedin","twitch","youtube","x","discord"].forEach(function(k){
-    var v=$("#s_"+k).value.trim(); if(v)o[k]=v;});
-  return o;
+// ---- visual editor (toolbar + image upload) ----
+var TOOLS=[
+  {cmd:"bold",html:'<b>B</b>',t:"Bold"},
+  {cmd:"italic",html:'<i>I</i>',t:"Italic"},
+  {sep:1},
+  {block:"H2",html:'H',t:"Heading"},
+  {block:"H3",html:'<span style="font-size:11px">H</span>',t:"Subheading"},
+  {block:"P",html:'<span class="mono">Text</span>',t:"Normal text"},
+  {sep:1},
+  {cmd:"insertUnorderedList",html:'•&nbsp;',t:"Bulleted list"},
+  {cmd:"insertOrderedList",html:'1.',t:"Numbered list"},
+  {block:"BLOCKQUOTE",html:'&#10078;',t:"Quote"},
+  {sep:1},
+  {link:1,html:'<span class="mono">Link</span>',t:"Add a link"},
+  {image:1,html:'<span class="mono">▣ Photo</span>',t:"Upload a photo",cls:"img"}
+];
+function buildToolbar(bar,ed,fileInput){
+  TOOLS.forEach(function(tl){
+    if(tl.sep){var s=document.createElement("span");s.className="tsep";bar.appendChild(s);return;}
+    var b=document.createElement("button");b.type="button";b.className="tbtn"+(tl.cls?" "+tl.cls:"");b.innerHTML=tl.html;b.title=tl.t;b.setAttribute("aria-label",tl.t);
+    b.addEventListener("mousedown",function(e){e.preventDefault();}); // keep selection
+    b.addEventListener("click",function(){
+      ed.focus();
+      if(tl.cmd)document.execCommand(tl.cmd,false,null);
+      else if(tl.block)document.execCommand("formatBlock",false,tl.block);
+      else if(tl.link){var u=prompt("Link URL (https://…)");if(u)document.execCommand("createLink",false,u);}
+      else if(tl.image)fileInput.click();
+    });
+    bar.appendChild(b);
+  });
+  fileInput.addEventListener("change",function(e){var f=e.target.files[0];if(f)insertImage(ed,f);fileInput.value="";});
 }
-function games(){return GAMES.filter(function(g){return gamesSel[g]})}
+function insertImage(ed,file){
+  if(file.size>15000000){alert("That image is too large.");return;}
+  var r=new FileReader();
+  r.onload=function(){
+    var im=new Image();
+    im.onload=function(){
+      var max=1280,w=im.width,h=im.height;
+      if(w>max||h>max){var sc=Math.min(max/w,max/h);w=Math.round(w*sc);h=Math.round(h*sc);}
+      var cv=document.createElement("canvas");cv.width=w;cv.height=h;cv.getContext("2d").drawImage(im,0,0,w,h);
+      var url=cv.toDataURL("image/jpeg",0.85);
+      ed.focus();
+      document.execCommand("insertHTML",false,'<img src="'+url+'" alt="">'+"<p><br></p>");
+    };
+    im.onerror=function(){alert("Could not read that image.");};
+    im.src=r.result;
+  };
+  r.readAsDataURL(file);
+}
+buildToolbar($('[data-bar="me"]'),$("#editor"),$("#editorImg"));
+buildToolbar($('[data-bar="team"]'),$("#t_editor"),$("#t_editorImg"));
 
-function post(url,body,btn,msg,doneWord){
-  btn.disabled=true;var old=btn.textContent;btn.textContent="Submitting…";
-  msg.className="msg";
+// ---- submit ----
+function socials(){var o={};["instagram","linkedin","twitch","youtube","x","discord"].forEach(function(k){var v=$("#s_"+k).value.trim();if(v)o[k]=v;});return o;}
+function games(){return GAMES.filter(function(g){return gamesSel[g]});}
+function bodyOf(ed){return ed.innerHTML;}
+function textOf(ed){return (ed.textContent||"").trim();}
+
+function submit(url,body,btn,msg,doneWord){
+  btn.disabled=true;var old=btn.textContent;btn.textContent="Publishing…";msg.className="msg";
   fetch(API+url,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(body)})
    .then(function(r){return r.json().then(function(j){return{ok:r.ok,j:j}})})
    .then(function(res){
+     btn.disabled=false;btn.textContent=old;
      if(res.ok&&res.j.ok){
-       btn.disabled=true;btn.textContent="Submitted ✓";
        msg.className="msg ok show";
-       msg.innerHTML="✓ "+doneWord+" — submitted for review. An organizer approves it in the admin panel, then it goes live at <a href=\""+res.j.page+"\" target=\"_blank\">"+res.j.page+"</a>.<br>Edit any field and submit again to replace your pending submission.";
-       var panel=btn.closest(".panel");
-       if(panel){var restore=function(){btn.disabled=false;btn.textContent=old;panel.removeEventListener("input",restore);};panel.addEventListener("input",restore);}
+       msg.innerHTML="✓ "+doneWord+" — <b>submitted for review</b>. It is <b>not live yet</b>: an organizer approves it, then it appears at <span class='mono' style='font-size:13px'>"+res.j.page+"</span>.<br>Come back and submit again to replace your pending submission.";
      }else{
-       btn.disabled=false;btn.textContent=old;
        msg.className="msg err show";
        msg.textContent="✗ "+((res.j&&res.j.detail)||"Something went wrong. Try again.");
      }
-   }).catch(function(e){
-     btn.disabled=false;btn.textContent=old;
-     msg.className="msg err show";msg.textContent="✗ Network error — is the portal API reachable? "+e;
-   });
+   }).catch(function(e){btn.disabled=false;btn.textContent=old;msg.className="msg err show";msg.textContent="✗ Network error — is the portal reachable? "+e;});
 }
 
 $("#pubBtn").onclick=function(){
   var u=slug($("#username").value||$("#displayName").value);
-  if(!u){$("#meMsg").className="msg err show";$("#meMsg").textContent="✗ Enter a display name or username.";return;}
-  var body=$("#md").value.trim(); if(body.length<10){$("#meMsg").className="msg err show";$("#meMsg").textContent="✗ Write a few words about yourself before publishing.";return;}
-  post("/api/publish",{
+  if(!u)return err("#meMsg","Go back and enter a display name or username.");
+  var ed=$("#editor");
+  if(textOf(ed).length<3 && ed.querySelectorAll("img").length===0)return err("#meMsg","Add a few words or a photo to your page first.");
+  submit("/api/publish",{
     username:u,displayName:$("#displayName").value.trim(),tagline:$("#tagline").value.trim(),
     avatar:avatarData,socials:socials(),games:games(),
-    lookingForTeam:$("#lft").classList.contains("on"),markdown:$("#md").value,
+    lookingForTeam:$("#lft").classList.contains("on"),bodyHtml:bodyOf(ed),
     regEmail:(JSON.parse(localStorage.getItem("jc_reg")||"{}").email||"")
   },$("#pubBtn"),$("#meMsg"),"Your player page");
 };
 $("#teamBtn").onclick=function(){
   var s=slug($("#t_slug").value||$("#t_name").value);
-  if(!s){$("#teamMsg").className="msg err show";$("#teamMsg").textContent="✗ Enter a team name.";return;}
-  var tbody=$("#t_md").value.trim(); if(tbody.length<10){$("#teamMsg").className="msg err show";$("#teamMsg").textContent="✗ Write a few words about your team before publishing.";return;}
-  post("/api/group",{
+  if(!s)return err("#teamMsg","Go back and enter a team name.");
+  var ed=$("#t_editor");
+  if(textOf(ed).length<3 && ed.querySelectorAll("img").length===0)return err("#teamMsg","Add a few words or a photo to your page first.");
+  submit("/api/group",{
     name:$("#t_name").value.trim(),slug:s,event:$("#t_event").value.trim(),
     game:$("#t_game").value.trim(),tagline:$("#t_tagline").value.trim(),
     openSlots:parseInt($("#t_slots").value)||0,
     members:$("#t_members").value.split(",").map(function(x){return x.trim()}).filter(Boolean),
-    markdown:$("#t_md").value,
+    bodyHtml:bodyOf(ed),
     regEmail:(JSON.parse(localStorage.getItem("jc_reg")||"{}").email||"")
   },$("#teamBtn"),$("#teamMsg"),"Your team page");
 };
